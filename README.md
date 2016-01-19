@@ -91,9 +91,9 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses' => function() {
 }]);
 ```
 
-This is only meant to be a starting point; you can change them as you see fit. 
+This is only meant to be a starting point; you can change them as you see fit.  Make sure you read through your new Auth Controllers and understand how they work before you make any changes. 
 
-Detailed instructions for using Sentinel [can be found here](https://cartalyst.com/manual/sentinel/2.0).  Centaur automatically installs Sentinel and registers the ```Sentinel```, ```Activations```, and ```Reminders``` aliases for you. 
+Centaur automatically installs Sentinel and registers the ```Sentinel```, ```Activations```, and ```Reminders``` aliases for you.  Detailed instructions for using Sentinel [can be found here](https://cartalyst.com/manual/sentinel/2.0).
 
 ## Usage in Existing Applications
 If you already have already built out your auth views and controllers, the best way to make use of this package is to inject the ```AuthManager``` into your controllers and use it as a wrapper for Sentinel.   Detailed information about the ```AuthManager``` methods and responses will be coming soon.  
