@@ -3,6 +3,13 @@
     "description": "An opinionated implementation of Cartalyst's Sentinel for Laravel 5",
     "keywords": ["laravel", "sentinel", "auth"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Ryan Durham",
+            "email": "ryan@stagerightlabs.com",
+            "homepage": "http://stagerightlabs.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Centaur\\": "src/"
