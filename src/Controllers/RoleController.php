@@ -5,7 +5,6 @@ namespace Centaur\Controllers;
 use Sentinel;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Vinkla\Hashids\HashidsManager;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class RoleController extends Controller

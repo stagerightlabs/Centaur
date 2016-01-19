@@ -170,7 +170,7 @@ class CentaurScaffold extends Command
         ];
         $replace = [
             'namespace '.$this->namespace.';',
-            $this->namespace.'\\',
+            $this->namespace.'\\Http\\',
         ];
 
         $this->files->put($path, str_replace($search, $replace, $this->files->get($path)));

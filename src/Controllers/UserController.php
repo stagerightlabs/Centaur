@@ -7,7 +7,6 @@ use Sentinel;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
-use Vinkla\Hashids\HashidsManager;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class UserController extends Controller
