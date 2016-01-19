@@ -52,8 +52,9 @@ Run your database migrations:
 $ php artisan migrate
 ```
 
-Run the Database Seeder:
+Run the Database Seeder. You may need to re-generate the autoloader before this will work:
 ```shell
+$ composer dump-autoload
 $ php artisan db:seed --class="SentinelDatabaseSeeder"
 ```
 
