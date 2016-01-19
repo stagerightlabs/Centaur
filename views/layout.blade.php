@@ -34,8 +34,10 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="{{ Request::is('/dashboard') ? 'active' : '' }}"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="{{ Request::is('/users*') ? 'active' : '' }}"><a href="{{ route('users.index') }}">Users</a></li>
-                        <li><a href="{{ route('roles.index') }}">Roles</a></li>
+                        @if (Sentinel::check() && Sentinel::inRole('administrator'))
+                            <li class="{{ Request::is('users*') ? 'active' : '' }}"><a href="{{ route('users.index') }}">Users</a></li>
+                            <li class="{{ Request::is('roles*') ? 'active' : '' }}"><a href="{{ route('roles.index') }}">Roles</a></li>
+                        @endif
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (Sentinel::check())
