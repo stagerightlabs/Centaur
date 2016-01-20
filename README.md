@@ -52,8 +52,9 @@ Run your database migrations:
 $ php artisan migrate
 ```
 
-Run the Database Seeder:
+Run the Database Seeder. You may need to re-generate the autoloader before this will work:
 ```shell
+$ composer dump-autoload
 $ php artisan db:seed --class="SentinelDatabaseSeeder"
 ```
 
@@ -96,4 +97,4 @@ This is only meant to be a starting point; you can change them as you see fit.  
 Centaur automatically installs Sentinel and registers the ```Sentinel```, ```Activations```, and ```Reminders``` aliases for you.  Detailed instructions for using Sentinel [can be found here](https://cartalyst.com/manual/sentinel/2.0).
 
 ## Usage in Existing Applications
-If you already have already built out your auth views and controllers, the best way to make use of this package is to inject the ```AuthManager``` into your controllers and use it as a wrapper for Sentinel.   Detailed information about the ```AuthManager``` methods and responses will be coming soon.  
+If you already have already built out your auth views and controllers, the best way to make use of this package is to inject the ```AuthManager``` into your controllers and use it as a wrapper for Sentinel.   Detailed information about the ```AuthManager``` methods [can be found here](https://github.com/SRLabs/Centaur/wiki/AuthManager-Methods-and-Responses).  
