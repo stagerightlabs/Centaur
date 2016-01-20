@@ -42,7 +42,7 @@ abstract class Reply implements Jsonable, Arrayable
      * If an exception was caught, it will be available here for reference
      * @var Exception|Null
      */
-    protected $exception;
+    protected $exception = null;
 
     /**
      * Occasionally we will need to manually specify a redirect location when
