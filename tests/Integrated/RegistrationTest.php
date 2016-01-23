@@ -25,6 +25,9 @@ class RegistrationTest extends TestCase
     /** @test */
     public function an_existing_user_cannot_register_via_http()
     {
+        // For now, we don't want the validation exception to reach phpunit
+        $this->enableExceptionHandler();
+
         // Attempt registration (the admin user has already been registered)
         $this->visit('/register')
              ->type('admin@admin.com', 'email')
@@ -62,6 +65,9 @@ class RegistrationTest extends TestCase
     /** @test */
     public function a_user_cannot_register_again_via_ajax()
     {
+        // For now, we don't want the validation exception to reach phpunit
+        $this->enableExceptionHandler();
+
         // Specify that this is an ajax request
         $headers = [
             'X-Requested-With' => 'XMLHttpRequest',

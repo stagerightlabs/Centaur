@@ -17,13 +17,15 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "illuminate/support": "5.1.*",
+        "illuminate/support": "5.2.*",
         "cartalyst/sentinel": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
-        "orchestra/testbench": "3.1.*",
-        "Mockery/Mockery": "^0.9.4"
+        "orchestra/testbench": "3.2.*",
+        "Mockery/Mockery": "^0.9.4",
+        "symfony/css-selector": "2.8.*|3.0.*",
+        "symfony/dom-crawler": "2.8.*|3.0.*"
     },
     "autoload-dev": {
         "psr-4": {

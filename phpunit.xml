@@ -16,6 +16,7 @@
             <directory suffix=".php">./tests/</directory>
             <exclude>./tests/data</exclude>
             <exclude>./tests/TestCase.php</exclude>
+            <exclude>./tests/ApplicationTestCase.php</exclude>
         </testsuite>
     </testsuites>
     <php>

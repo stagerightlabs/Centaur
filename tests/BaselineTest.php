@@ -3,11 +3,14 @@
 namespace Centaur\Tests;
 
 use DB;
+use Orchestra\Testbench\ApplicationTestCase;
 
 class BaselineTest extends TestCase
 {
     public function testDatabaseExistance()
     {
+        $c = new ApplicationTestCase;
+
         $this->seeInDatabase('users', ['email' => 'admin@admin.com']);
     }
 

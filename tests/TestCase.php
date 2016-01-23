@@ -64,6 +64,12 @@ class TestCase extends OrchestraTestCase
         include __DIR__ . '/../src/routes.php';
     }
 
+    public function enableExceptionHandler()
+    {
+        $handler = $this->app->make('Orchestra\Testbench\Exceptions\ApplicationHandler');
+        $this->app->instance('Illuminate\Contracts\Debug\ExceptionHandler', $handler);
+    }
+
     /**
      * Load the package service provider
      * @param  \Illuminate\Foundation\Application $app
@@ -109,7 +115,7 @@ class TestCase extends OrchestraTestCase
      */
     public function signOut()
     {
-        Sentinel::logout(null,true);
+        Sentinel::logout(null, true);
         $this->user = null;
 
         return $this;
