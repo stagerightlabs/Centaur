@@ -6,10 +6,10 @@ This package provides an opinionated implementation of  [Cartalyst Sentinel](htt
 
 Make sure you use the version most appropriate for the type of Laravel application you have: 
 
-| Laravel Version  | Sentinel Version  | Packagist Branch |
+| Laravel Version  | Centaur Version  | Packagist Branch |
 |---|---|---|
 | 5.1.*  | 1.*  | ```"srlabs/centaur": "1.*"``` |
-| 5.2.*  | -  | Coming soon... |
+| 5.2.*  | 2.*  | ```"srlabs/centaur": "2.*"``` |
 
 ## Installation
 **Install the Package Via Composer:**
