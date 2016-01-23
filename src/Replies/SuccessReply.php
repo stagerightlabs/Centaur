@@ -23,8 +23,8 @@ class SuccessReply extends Reply
      * @var  string $url
      * @return Response|Redirect
      */
-    public function dispatch($url = '/') {
-
+    public function dispatch($url = '/')
+    {
         $request = app('request');
 
         if ($request->ajax() || $request->wantsJson()) {
@@ -32,14 +32,11 @@ class SuccessReply extends Reply
         }
 
         // Should we post a flash message?
-        if ($this->hasMessage()) {
+        if ($this->has('message')) {
             session()->flash('success', $this->message);
         }
 
         // Go to the specified url
         return redirect($url);
     }
-
-
-
 }

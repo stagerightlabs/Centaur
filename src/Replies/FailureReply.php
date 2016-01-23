@@ -23,8 +23,8 @@ class FailureReply extends Reply
      * @var  string $url
      * @return Response|Redirect
      */
-    public function dispatch($url = '/') {
-
+    public function dispatch($url = '/')
+    {
         $request = app('request');
 
         if ($request->ajax() || $request->wantsJson()) {
@@ -32,7 +32,7 @@ class FailureReply extends Reply
         }
 
         // Should we post a flash message?
-        if ($this->hasMessage()) {
+        if ($this->has('message')) {
             session()->flash('error', $this->message);
         }
 
