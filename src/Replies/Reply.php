@@ -56,7 +56,7 @@ abstract class Reply implements Jsonable, Arrayable
      * @param array $payload
      * @param Exception $exception
      */
-    public function __construct($message, array $payload = [], Exception $exception = null)
+    public function __construct($message = "", array $payload = [], Exception $exception = null)
     {
         $this->message = $message;
         $this->payload = $payload;
@@ -119,13 +119,41 @@ abstract class Reply implements Jsonable, Arrayable
     }
 
     /**
+     * Determine if a value exists within this object
+     * @param  string $key
+     * @return void
+     */
+    public function has($key)
+    {
+        if ($key == 'message') {
+            return !empty($this->message);
+        }
+
+        if ($key == 'exception') {
+            return !is_null($this->exception);
+        }
+
+        return array_key_exists($key, $this->payload);
+    }
+
+    /**
      * Unset a payload array key => value
      * @param  string $key
      * @return void
      */
     public function remove($key)
     {
-        unset($this->payload[$key]);
+        if ($key == 'message') {
+            $this->message = '';
+        }
+
+        if ($key == 'exception') {
+            $this->exception = null;
+        }
+
+        if (array_key_exists($key, $this->payload)) {
+            unset($this->payload[$key]);
+        }
     }
 
     /**
@@ -137,27 +165,11 @@ abstract class Reply implements Jsonable, Arrayable
     }
 
     /**
-     * @return Exception|Null
-     */
-    public function getException()
-    {
-        return $this->exception;
-    }
-
-    /**
      * @return Exception
      */
     public function setException(Exception $e)
     {
         return $this->exception = $e;
-    }
-
-    /**
-     * @return void
-     */
-    public function clearException()
-    {
-        $this->exception = null;
     }
 
     /**
@@ -212,6 +224,10 @@ abstract class Reply implements Jsonable, Arrayable
 
         if ($key == 'statusCode') {
             return $this->statusCode;
+        }
+
+        if ($key == 'exception') {
+            return $this->exception;
         }
 
         if (array_key_exists($key, $this->payload)) {

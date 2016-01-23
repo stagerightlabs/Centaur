@@ -24,8 +24,8 @@ class ExceptionReply extends Reply
      * @var  string $url
      * @return Response|Redirect
      */
-    public function dispatch($url = '/') {
-
+    public function dispatch($url = '/')
+    {
         $request = app('request');
 
         if ($request->ajax() || $request->wantsJson()) {
@@ -33,21 +33,21 @@ class ExceptionReply extends Reply
         }
 
         // Should we post a flash message?
-        if ($this->hasMessage()) {
+        if ($this->has('message')) {
             session()->flash('error', $this->message);
         }
 
         // Go to the specified url
-        return redirect()->to($this->getRedirectUrl())->withInput($request->input());
+        return redirect()->to($this->determineRedirectUrl())->withInput($request->input());
     }
 
     /**
-     * Get the URL we should redirect to.
+     * Determine the URL we should redirect to.
      * Borrowed from Illuminate\Foundation\Validation\ValidatesRequest
      *
      * @return string
      */
-    protected function getRedirectUrl()
+    protected function determineRedirectUrl()
     {
         if ($this->returnUrl) {
             return $this->returnUrl;
