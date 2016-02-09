@@ -1,6 +1,9 @@
 # Centaur
 
-[![Build Status](https://travis-ci.org/SRLabs/Centaur.svg?branch=master)](https://travis-ci.org/SRLabs/Centaur)
+[![Travis](https://img.shields.io/travis/SRLabs/Centaur.svg)](https://travis-ci.org/SRLabs/Centaur)
+[![Packagist](https://img.shields.io/packagist/dt/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
+[![Packagist](https://img.shields.io/packagist/v/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
+[![Packagist](https://img.shields.io/packagist/l/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
 
 This package provides an opinionated implementation of  [Cartalyst Sentinel](https://cartalyst.com/manual/sentinel/2.0) for [Laravel](https://github.com/laravel/laravel). 
 
