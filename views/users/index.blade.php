@@ -31,7 +31,7 @@
                             @if ($user->roles->count() > 0)
                                 {{ $user->roles->implode('name', ', ') }}
                             @else
-                                <em>No Assgined Role</em>
+                                <em>No Assigned Role</em>
                             @endif
                             </li>
                         </ul>
