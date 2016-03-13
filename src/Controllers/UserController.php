@@ -219,17 +219,16 @@ class UserController extends Controller
         $user = $this->userRepository->findById($id);
 
         // Check to be sure user cannot delete himself
-		if(Sentinel::getUser()->id == $user->id)
-		{
-			$message = "You cannot remove yourself!";
+        if (Sentinel::getUser()->id == $user->id) {
+            $message = "You cannot remove yourself!";
 
-			if($request->ajax()) {
-				return response()->json($message, 422);
-			}
-			session()->flash('error', $message);
-			return redirect()->route('users.index');
-		}
-		
+            if ($request->ajax()) {
+                return response()->json($message, 422);
+            }
+            session()->flash('error', $message);
+            return redirect()->route('users.index');
+        }
+        
 
         // Remove the user
         $user->delete();
