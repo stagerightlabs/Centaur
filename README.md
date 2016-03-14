@@ -1,4 +1,4 @@
-# Centaur
+    # Centaur
 
 [![Travis](https://img.shields.io/travis/SRLabs/Centaur.svg)](https://travis-ci.org/SRLabs/Centaur)
 [![Packagist](https://img.shields.io/packagist/dt/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
@@ -105,3 +105,21 @@ Centaur automatically installs Sentinel and registers the ```Sentinel```, ```Act
 
 ## Usage in Existing Applications
 If you already have already built out your auth views and controllers, the best way to make use of this package is to inject the ```AuthManager``` into your controllers and use it as a wrapper for Sentinel.   Detailed information about the ```AuthManager``` methods [can be found here](https://github.com/SRLabs/Centaur/wiki/AuthManager-Methods-and-Responses).  
+
+## Using Customized Middleware
+It is possible that the behavior of the Middleware that comes with this package might not suit your exact needs.  To adjust the middleware, create a copy of the problematic Centaur Middleware class in your ```app/Http/Middleware``` directory - this new class can be given any name you would like.   You can then adjust the middleware references in your controllers and/or routes file to use the new class, or you can bind the new class to the Centaur Middleware class name in your App service provider, as such: 
+
+```php
+// app/providers/AppServiceProvider.php
+/**
+ * Register any application services.
+ *
+ * @return void
+ */
+public function register()
+{
+    $this->app->bind('Centaur\Middleware\SentinelGuest', function ($app) {
+        return new \App\Http\Middleware\AlternativeGuestMiddleware;
+    });
+}
+```
