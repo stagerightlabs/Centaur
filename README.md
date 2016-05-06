@@ -1,4 +1,4 @@
-    # Centaur
+# Centaur
 
 [![Travis](https://img.shields.io/travis/SRLabs/Centaur.svg)](https://travis-ci.org/SRLabs/Centaur)
 [![Packagist](https://img.shields.io/packagist/dt/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
