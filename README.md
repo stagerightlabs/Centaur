@@ -32,7 +32,7 @@ $ composer require srlabs/centaur
 ```
 
 ## Usage in New Applications
-If you are starting a new Laravel 5.1 application, this package provides a convenient way to get up and running with ```Cartalyst\Sentinel``` very quickly.   Start by removing the default auth scaffolding that ships with a new Laravel 5.1 application: 
+If you are starting a new Laravel 5.* application, this package provides a convenient way to get up and running with ```Cartalyst\Sentinel``` very quickly.   Start by removing the default auth scaffolding that ships with a new Laravel 5.1 application: 
 
 ```shell
 $ php artisan centaur:spruce
@@ -63,40 +63,36 @@ $ php artisan db:seed --class="SentinelDatabaseSeeder"
 
 You will also need to add these routes to your ```routes.php``` file:
 ```php
-Route::group(['middleware' => ['web']], function () {
+// Authorization
+Route::get('/login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
+Route::post('/login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
+Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\SessionController@getLogout']);
 
-    // Authorization
-    Route::get('/login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
-    Route::post('/login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
-    Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\SessionController@getLogout']);
+// Registration
+Route::get('register', ['as' => 'auth.register.form', 'uses' => 'Auth\RegistrationController@getRegister']);
+Route::post('register', ['as' => 'auth.register.attempt', 'uses' => 'Auth\RegistrationController@postRegister']);
 
-    // Registration
-    Route::get('register', ['as' => 'auth.register.form', 'uses' => 'Auth\RegistrationController@getRegister']);
-    Route::post('register', ['as' => 'auth.register.attempt', 'uses' => 'Auth\RegistrationController@postRegister']);
+// Activation
+Route::get('activate/{code}', ['as' => 'auth.activation.attempt', 'uses' => 'Auth\RegistrationController@getActivate']);
+Route::get('resend', ['as' => 'auth.activation.request', 'uses' => 'Auth\RegistrationController@getResend']);
+Route::post('resend', ['as' => 'auth.activation.resend', 'uses' => 'Auth\RegistrationController@postResend']);
 
-    // Activation
-    Route::get('activate/{code}', ['as' => 'auth.activation.attempt', 'uses' => 'Auth\RegistrationController@getActivate']);
-    Route::get('resend', ['as' => 'auth.activation.request', 'uses' => 'Auth\RegistrationController@getResend']);
-    Route::post('resend', ['as' => 'auth.activation.resend', 'uses' => 'Auth\RegistrationController@postResend']);
+// Password Reset
+Route::get('password/reset/{code}', ['as' => 'auth.password.reset.form', 'uses' => 'Auth\PasswordController@getReset']);
+Route::post('password/reset/{code}', ['as' => 'auth.password.reset.attempt', 'uses' => 'Auth\PasswordController@postReset']);
+Route::get('password/reset', ['as' => 'auth.password.request.form', 'uses' => 'Auth\PasswordController@getRequest']);
+Route::post('password/reset', ['as' => 'auth.password.request.attempt', 'uses' => 'Auth\PasswordController@postRequest']);
 
-    // Password Reset
-    Route::get('password/reset/{code}', ['as' => 'auth.password.reset.form', 'uses' => 'Auth\PasswordController@getReset']);
-    Route::post('password/reset/{code}', ['as' => 'auth.password.reset.attempt', 'uses' => 'Auth\PasswordController@postReset']);
-    Route::get('password/reset', ['as' => 'auth.password.request.form', 'uses' => 'Auth\PasswordController@getRequest']);
-    Route::post('password/reset', ['as' => 'auth.password.request.attempt', 'uses' => 'Auth\PasswordController@postRequest']);
+// Users
+Route::resource('users', 'UserController');
 
-    // Users
-    Route::resource('users', 'UserController');
+// Roles
+Route::resource('roles', 'RoleController');
 
-    // Roles
-    Route::resource('roles', 'RoleController');
-
-    // Dashboard
-    Route::get('dashboard', ['as' => 'dashboard', 'uses' => function() {
-        return view('centaur.dashboard');
-    }]);
-
-});
+// Dashboard
+Route::get('dashboard', ['as' => 'dashboard', 'uses' => function() {
+    return view('centaur.dashboard');
+}]);
 ```
 
 This is only meant to be a starting point; you can change them as you see fit.  Make sure you read through your new Auth Controllers and understand how they work before you make any changes. 
