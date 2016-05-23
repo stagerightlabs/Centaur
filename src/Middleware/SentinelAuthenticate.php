@@ -7,6 +7,8 @@ use Sentinel;
 
 class SentinelAuthenticate
 {
+    use TranslationHelper;
+
     /**
      * Handle an incoming request.
      *
@@ -18,7 +20,8 @@ class SentinelAuthenticate
     {
         if (!Sentinel::check()) {
             if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+                $message = $this->translate('unauthorized', 'Unauthorized');
+                return response()->json(['error' => $message], 401);
             } else {
                 return redirect()->guest(route('auth.login.form'));
             }

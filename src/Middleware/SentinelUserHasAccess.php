@@ -7,6 +7,8 @@ use Sentinel;
 
 class SentinelUserHasAccess
 {
+    use TranslationHelper;
+
     /**
      * Handle an incoming request.
      *
@@ -30,9 +32,11 @@ class SentinelUserHasAccess
     public function denied($request)
     {
         if ($request->ajax()) {
-            return response('Unauthorized.', 401);
+            $message = $this->translate('unauthorized', 'Unauthorized');
+            return response()->json(['error' => $message], 401);
         } else {
-            session()->flash('error', 'You do not have permission to do that.');
+            $message = $this->translate('need_permission', 'You do not have permission to do that.');
+            session()->flash('error', $message);
             return redirect()->back();
         }
     }
