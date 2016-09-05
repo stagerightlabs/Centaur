@@ -42,8 +42,10 @@ class CentaurSpruce extends Command
         $files = [
             '/database/migrations/2014_10_12_000000_create_users_table.php',
             '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-            '/app/Http/Controllers/Auth/AuthController.php',
-            '/app/Http/Controllers/Auth/PasswordController.php',
+            '/app/Http/Controllers/Auth/ForgotPasswordController.php',
+            '/app/Http/Controllers/Auth/LoginController.php',
+            '/app/Http/Controllers/Auth/RegisterController.php',
+            '/app/Http/Controllers/Auth/ResetPasswordController.php',
         ];
 
         foreach ($files as $file) {

@@ -18,7 +18,7 @@
     "require": {
         "php": ">=5.5.9",
         "illuminate/support": "5.3.*",
-        "cartalyst/sentinel": "^2.0"
+        "cartalyst/sentinel": "^2.0.13"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",

@@ -68,7 +68,7 @@ class AuthManager
             return $this->returnException($e);
         }
 
-        if ($user) {
+        if (!$this->sentinel->check()) {
             $message = $this->translate('user_logout', 'You have been logged out');
             return new SuccessReply($message);
         }

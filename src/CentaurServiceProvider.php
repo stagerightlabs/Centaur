@@ -47,9 +47,6 @@ class CentaurServiceProvider extends ServiceProvider
             // The package views have not been published. Use the defaults.
             $this->loadViewsFrom($centaurPath . '/../views', 'Centaur');
         }
-
-        // Establish Translator Namespace
-        // $this->loadTranslationsFrom($centaurPath . '/../lang', 'Centaur');
     }
 
     /**

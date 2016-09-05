@@ -9,8 +9,7 @@ class BaselineTest extends TestCase
 {
     public function testDatabaseExistance()
     {
-        $c = new ApplicationTestCase;
-
+        $app = new ApplicationTestCase;
         $this->seeInDatabase('users', ['email' => 'admin@admin.com']);
     }
 
