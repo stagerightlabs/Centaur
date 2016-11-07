@@ -9,7 +9,7 @@
             case 'info':
                 ?>
                 <div class="row">
-                    <div class="alert alert-{{ $key }} alert-dismissable">
+                    <div class="alert alert-{{ ($key == 'error') ? 'danger' : $key }} alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <strong>{{ ucfirst($key) }}:</strong> {!! $value !!}
                     </div>
