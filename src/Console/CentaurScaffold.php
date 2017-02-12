@@ -5,11 +5,12 @@ namespace Centaur\Console;
 use ReflectionClass;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Console\AppNamespaceDetectorTrait;
+use Illuminate\Console\DetectsApplicationNamespace;
+
 
 class CentaurScaffold extends Command
 {
-    use AppNamespaceDetectorTrait;
+    use DetectsApplicationNamespace;
 
     /**
      * The name and signature of the console command.
