@@ -7,7 +7,7 @@ use Sentinel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Orchestra\Testbench\BrowserKit\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {

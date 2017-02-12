@@ -31,10 +31,10 @@ class CentaurServiceProvider extends ServiceProvider
         $centaurPath = dirname($centaurFilename);
 
         // Register the route middleware
-        $router->middleware('sentinel.guest', \Centaur\Middleware\SentinelGuest::class);
-        $router->middleware('sentinel.auth', \Centaur\Middleware\SentinelAuthenticate::class);
-        $router->middleware('sentinel.role', \Centaur\Middleware\SentinelUserInRole::class);
-        $router->middleware('sentinel.access', \Centaur\Middleware\SentinelUserHasAccess::class);
+        $router->aliasMiddleware('sentinel.guest', \Centaur\Middleware\SentinelGuest::class);
+        $router->aliasMiddleware('sentinel.auth', \Centaur\Middleware\SentinelAuthenticate::class);
+        $router->aliasMiddleware('sentinel.role', \Centaur\Middleware\SentinelUserInRole::class);
+        $router->aliasMiddleware('sentinel.access', \Centaur\Middleware\SentinelUserHasAccess::class);
 
         // Register Artisan Commands
         $this->registerArtisanCommands();
@@ -80,7 +80,7 @@ class CentaurServiceProvider extends ServiceProvider
     private function registerArtisanCommands()
     {
         // Register the Scaffold command
-        $this->app['centaur.scaffold'] = $this->app->share(function ($app) {
+        $this->app->singleton('centaur.scaffold', function($app) {
             return new CentaurScaffold(
                 $app->make('files')
             );
@@ -88,7 +88,7 @@ class CentaurServiceProvider extends ServiceProvider
         $this->commands('centaur.scaffold');
 
         // Register the Spruce command
-        $this->app['centaur.spruce'] = $this->app->share(function ($app) {
+        $this->app->singleton('centaur.spruce', function($app) {
             return new CentaurSpruce(
                 $app->make('files')
             );
