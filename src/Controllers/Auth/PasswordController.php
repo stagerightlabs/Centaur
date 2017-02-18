@@ -60,14 +60,6 @@ class PasswordController extends Controller
             // Send the email
             $code = $reminder->code;
             $email = $user->email;
-            Mail::queue(
-                'centaur.email.reset',
-                ['code' => $code],
-                function ($message) use ($email) {
-                    $message->to($email)
-                        ->subject('Password Reset Link');
-                }
-            );
             Mail::to($email)->queue(new CentaurPasswordReset($code));
         }
 
