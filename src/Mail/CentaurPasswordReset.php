@@ -18,7 +18,7 @@ class CentaurPasswordReset extends Mailable
      *
      * @return void
      */
-    public function __construct($email, $code)
+    public function __construct($code)
     {
         $this->code = $code;
     }
