@@ -4,6 +4,7 @@ namespace Centaur\Tests\Integrated;
 
 use Mail;
 use Centaur\Tests\TestCase;
+use Centaur\Mail\CentaurWelcomeEmail;
 
 class RegistrationTest extends TestCase
 {
@@ -11,7 +12,7 @@ class RegistrationTest extends TestCase
     public function a_user_can_register_via_http()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Attempt registration
         $this->visit('/register')
@@ -20,6 +21,11 @@ class RegistrationTest extends TestCase
              ->type('violin', 'password_confirmation')
              ->press('Sign Me Up!')
              ->see("Registration complete.");
+
+        // Assert mail was sent
+        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */
@@ -41,7 +47,7 @@ class RegistrationTest extends TestCase
     public function a_user_can_register_via_ajax()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Specify that this is an ajax request
         $headers = [
@@ -60,6 +66,11 @@ class RegistrationTest extends TestCase
 
         // Verify
         $this->seeInDatabase('users', ['email' => 'andrei@prozorov.net']);
+
+        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
+
     }
 
     /** @test */

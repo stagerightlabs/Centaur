@@ -6,6 +6,7 @@ use Mail;
 use Reminder;
 use Sentinel;
 use Centaur\Tests\TestCase;
+use Centaur\Mail\CentaurPasswordReset;
 
 class PasswordReminderTest extends TestCase
 {
@@ -13,7 +14,7 @@ class PasswordReminderTest extends TestCase
     public function a_user_can_reset_via_http()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Prepare new account
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
@@ -32,13 +33,17 @@ class PasswordReminderTest extends TestCase
              ->type('natasha', 'password_confirmation')
              ->press('Save')
              ->see('Password reset successful.');
+
+        Mail::assertSent(CentaurPasswordReset::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */
     public function an_invalid_reset_code_will_not_work_via_http()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Prepare new account
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
@@ -51,13 +56,17 @@ class PasswordReminderTest extends TestCase
         // Attempt changing password
         $this->visit('/password/reset/invalid_reset_code')
              ->see('Invalid or expired password reset code;');
+
+        Mail::assertSent(CentaurPasswordReset::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */
     public function a_user_can_reset_via_ajax()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Specify that this is an ajax request
         $headers = [
@@ -89,7 +98,7 @@ class PasswordReminderTest extends TestCase
     public function an_invalid_reset_code_will_not_work_via_ajax()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Specify that this is an ajax request
         $headers = [

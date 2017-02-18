@@ -10,7 +10,7 @@ use Sentinel;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
-use App\Mail\CentaurPasswordReset;
+use Centaur\Mail\CentaurPasswordReset;
 use Centaur\Controllers\Controller;
 
 class PasswordController extends Controller
@@ -60,7 +60,7 @@ class PasswordController extends Controller
             // Send the email
             $code = $reminder->code;
             $email = $user->email;
-            Mail::to($email)->queue(new CentaurPasswordReset($code));
+            Mail::to($email)->queue(new CentaurPasswordReset($email, $code));
         }
 
         $message = 'Instructions for changing your password will be sent to your email address if it is associated with a valid account.';

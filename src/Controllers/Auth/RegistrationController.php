@@ -9,8 +9,8 @@ use Activation;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
-use App\Mail\CentaurWelcomeEmail;
 use Centaur\Controllers\Controller;
+use Centaur\Mail\CentaurWelcomeEmail;
 
 class RegistrationController extends Controller
 {

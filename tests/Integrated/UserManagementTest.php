@@ -5,6 +5,7 @@ namespace Centaur\Tests\Integrated;
 use Mail;
 use Sentinel;
 use Centaur\Tests\TestCase;
+use Centaur\Mail\CentaurWelcomeEmail;
 
 class UserManagementTest extends TestCase
 {
@@ -12,7 +13,7 @@ class UserManagementTest extends TestCase
     public function you_can_create_a_user_via_http()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Attempt user creation
         $this->signIn('admin@admin.com')
@@ -34,13 +35,17 @@ class UserManagementTest extends TestCase
         $this->seeInDatabase('users', ['email' => 'andrei@prozorov.net']);
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
+
+        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */
     public function you_can_create_a_user_via_ajax()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Specify that this is an ajax request
         $headers = [
@@ -71,6 +76,10 @@ class UserManagementTest extends TestCase
         $this->seeInDatabase('users', ['email' => 'andrei@prozorov.net']);
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
+
+        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */

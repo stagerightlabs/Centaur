@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Mail;
+namespace Centaur\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CentaurPasswordReset extends Mailable
+class CentaurWelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
+    public $email;
     public $code;
-    
+
     /**
      * Create a new message instance.
      *
@@ -20,6 +21,7 @@ class CentaurPasswordReset extends Mailable
      */
     public function __construct($email, $code)
     {
+        $this->email = $email;
         $this->code = $code;
     }
 
@@ -31,7 +33,7 @@ class CentaurPasswordReset extends Mailable
     public function build()
     {
         return $this
-            ->subject('Password Reset Link')
-            ->view('centaur.email.reset');
+            ->subject('Your account has been created!')
+            ->view('centaur.email.welcome');
     }
 }

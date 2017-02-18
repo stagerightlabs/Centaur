@@ -7,7 +7,7 @@ use Sentinel;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
-use App\Mail\CentaurWelcomeEmail;
+use Centaur\Mail\CentaurWelcomeEmail;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class UserController extends Controller
