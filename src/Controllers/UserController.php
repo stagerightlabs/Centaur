@@ -7,6 +7,7 @@ use Sentinel;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
+use App\Mail\CentaurWelcomeEmail;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class UserController extends Controller
@@ -89,14 +90,7 @@ class UserController extends Controller
         if (!$activate) {
             $code = $result->activation->getCode();
             $email = $result->user->email;
-            Mail::queue(
-                'centaur.email.welcome',
-                ['code' => $code, 'email' => $email],
-                function ($message) use ($email) {
-                    $message->to($email)
-                        ->subject('Your account has been created');
-                }
-            );
+            Mail::to($email)->queue(new CentaurWelcomeEmail($email, $code));
         }
 
         // Assign User Roles
