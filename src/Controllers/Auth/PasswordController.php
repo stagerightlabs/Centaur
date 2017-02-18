@@ -68,7 +68,7 @@ class PasswordController extends Controller
                         ->subject('Password Reset Link');
                 }
             );
-            Mail::to($email)->queue(new CentaurPasswordReset($email, $code));
+            Mail::to($email)->queue(new CentaurPasswordReset($code));
         }
 
         $message = 'Instructions for changing your password will be sent to your email address if it is associated with a valid account.';
