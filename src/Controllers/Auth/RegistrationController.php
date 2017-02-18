@@ -9,6 +9,7 @@ use Activation;
 use App\Http\Requests;
 use Centaur\AuthManager;
 use Illuminate\Http\Request;
+use App\Mail\CentaurWelcomeEmail;
 use Centaur\Controllers\Controller;
 
 class RegistrationController extends Controller
@@ -66,14 +67,7 @@ class RegistrationController extends Controller
         // Send the activation email
         $code = $result->activation->getCode();
         $email = $result->user->email;
-        Mail::queue(
-            'centaur.email.welcome',
-            ['code' => $code, 'email' => $email],
-            function ($message) use ($email) {
-                $message->to($email)
-                    ->subject('Your account has been created');
-            }
-        );
+        Mail::to($email)->queue(new CentaurWelcomeEmail($email, $code));
 
         // Ask the user to check their email for the activation link
         $result->setMessage('Registration complete.  Please check your email for activation instructions.');
