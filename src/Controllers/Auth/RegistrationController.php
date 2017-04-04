@@ -67,7 +67,7 @@ class RegistrationController extends Controller
         // Send the activation email
         $code = $result->activation->getCode();
         $email = $result->user->email;
-        Mail::to($email)->queue(new CentaurWelcomeEmail($email, $code));
+        Mail::to($email)->queue(new CentaurWelcomeEmail($email, $code, 'Your account has been created!'));
 
         // Ask the user to check their email for the activation link
         $result->setMessage('Registration complete.  Please check your email for activation instructions.');
@@ -138,14 +138,7 @@ class RegistrationController extends Controller
             // Send the email
             $code = $activation->getCode();
             $email = $user->email;
-            Mail::queue(
-                'auth.email.welcome',
-                ['code' => $code, 'email' => $email],
-                function ($message) use ($email) {
-                    $message->to($email)
-                        ->subject('Account Activation Instructions');
-                }
-            );
+            Mail::to($email)->queue(new CentaurWelcomeEmail($email, $code, 'Account Activation Instructions'));
         }
 
         $message = 'New instructions will be sent to that email address if it is associated with a inactive account.';

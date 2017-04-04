@@ -11,18 +11,31 @@ class CentaurWelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * @var string
+     */
     public $email;
+
+    /**
+     * @var string
+     */
     public $code;
+
+    /**
+     * @var string
+     */
+    public $subject;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email, $code)
+    public function __construct($email, $code, $subject = 'Your account has been created!')
     {
         $this->email = $email;
         $this->code = $code;
+        $this->subject = $subject;
     }
 
     /**
@@ -33,7 +46,7 @@ class CentaurWelcomeEmail extends Mailable
     public function build()
     {
         return $this
-            ->subject('Your account has been created!')
+            ->subject($this->subject)
             ->view('centaur.email.welcome');
     }
 }

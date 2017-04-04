@@ -4,6 +4,7 @@ namespace Centaur\Tests\Integrated;
 
 use Mail;
 use Centaur\Tests\TestCase;
+use Centaur\Mail\CentaurWelcomeEmail;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
 
 class ActivationTest extends TestCase
@@ -73,7 +74,7 @@ class ActivationTest extends TestCase
     public function it_resends_an_activation_email_via_http()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Prepare new account
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
@@ -83,13 +84,18 @@ class ActivationTest extends TestCase
              ->type('andrei@prozorov.net', 'email')
              ->press('Send')
              ->see('New instructions will be sent to that email address if it is associated with a inactive account.');
+
+        // Verify
+        Mail::assertSent(CentaurWelcomeEmail::class, function ($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
     /** @test */
     public function it_resends_an_activation_email_via_ajax()
     {
         // Mock Expectations
-        Mail::shouldReceive('queue')->once();
+        Mail::fake();
 
         // Prepare new account
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
@@ -103,6 +109,11 @@ class ActivationTest extends TestCase
         // Attempt activation
         $this->post('/resend', ['email' => 'andrei@prozorov.net'], $headers)
              ->seeJson(['message' => 'New instructions will be sent to that email address if it is associated with a inactive account.']);
+
+        // Verify
+        Mail::assertSent(CentaurWelcomeEmail::class, function ($mail) {
+            return $mail->hasTo('andrei@prozorov.net');
+        });
     }
 
 }
