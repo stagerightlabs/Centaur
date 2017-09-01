@@ -21,5 +21,6 @@
     </testsuites>
     <php>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
     </php>
 </phpunit>
