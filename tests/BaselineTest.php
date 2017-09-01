@@ -3,19 +3,18 @@
 namespace Centaur\Tests;
 
 use DB;
-use Orchestra\Testbench\ApplicationTestCase;
+use Centaur\Tests\TestCase;
 
 class BaselineTest extends TestCase
 {
     public function testDatabaseExistance()
     {
-        $app = new ApplicationTestCase;
-        $this->seeInDatabase('users', ['email' => 'admin@admin.com']);
+        $this->assertDatabaseHas('users', ['email' => 'admin@admin.com']);
     }
 
     public function testDatabaseExistanceVersionTwo()
     {
         DB::table('users')->truncate();
-        $this->dontSeeInDatabase('users', ['email' => 'admin@admin.com']);
+        $this->assertDatabaseMissing('users', ['email' => 'admin@admin.com']);
     }
 }

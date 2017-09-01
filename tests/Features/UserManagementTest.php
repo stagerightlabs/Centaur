@@ -12,31 +12,32 @@ class UserManagementTest extends TestCase
     /** @test */
     public function you_can_create_a_user_via_http()
     {
-        // Mock Expectations
+        // Arrange
+        $moderatorRole = Sentinel::findRoleBySlug('moderator');
         Mail::fake();
 
-        // Attempt user creation
-        $this->signIn('admin@admin.com')
-             ->visit('/users/create')
-             ->type('Andrei', 'first_name')
-             ->type('Prozorov', 'last_name')
-             ->type('andrei@prozorov.net', 'email')
-             ->check('roles[moderator]')
-             ->type('password', 'password')
-             ->type('password', 'password_confirmation')
-             ->press('Create')
-             ->see('User andrei@prozorov.net has been created.');
+        // Act
+        $this->signIn('admin@admin.com');
 
+        $response = $this->post('/users', [
+            'first_name' => 'Andrei',
+            'last_name' => 'Prozorov',
+            'email' => 'andrei@prozorov.net',
+            'roles' => [$moderatorRole->slug => $moderatorRole->id],
+            'password' => 'password',
+            'password_confirmation' => 'password'
+        ]);
+
+        // Assert
         $user = Sentinel::findUserByCredentials(['email' => 'andrei@prozorov.net']);
         $administrators = Sentinel::findRoleBySlug('administrator');
         $moderators = Sentinel::findRoleBySlug('moderator');
 
-        // Verify
-        $this->seeInDatabase('users', ['email' => 'andrei@prozorov.net']);
+        $this->assertDatabaseHas('users', ['email' => 'andrei@prozorov.net']);
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
 
-        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -44,40 +45,36 @@ class UserManagementTest extends TestCase
     /** @test */
     public function you_can_create_a_user_via_ajax()
     {
-        // Mock Expectations
+        // Arrange
+        $moderatorRole = Sentinel::findRoleBySlug('moderator');
         Mail::fake();
-
-        // Specify that this is an ajax request
         $headers = [
             'X-Requested-With' => 'XMLHttpRequest',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
-        // Start a qualified user session
+        // Act
         $this->signIn('admin@admin.com');
 
-        // Attempt user creation
-        $this->post('/users', [
+        $response = $this->post('/users', [
             'first_name' => 'Andrei',
             'last_name' => 'Prozorov',
             'email' => 'andrei@prozorov.net',
-            'roles' => ['moderator' => 2],
+            'roles' => [$moderatorRole->slug => $moderatorRole->id],
             'password' => 'password',
             'password_confirmation' => 'password'
-        ], $headers)->seeJson([
-             'email' => 'andrei@prozorov.net',
-        ]);
+        ], $headers);
 
+        // Assert
         $user = Sentinel::findUserByCredentials(['email' => 'andrei@prozorov.net']);
         $administrators = Sentinel::findRoleBySlug('administrator');
-        $moderators = Sentinel::findRoleBySlug('moderator');
 
-        // Verify
-        $this->seeInDatabase('users', ['email' => 'andrei@prozorov.net']);
-        $this->assertTrue($user->inRole($moderators));
+        $response->assertJsonFragment(['email' => 'andrei@prozorov.net']);
+        $this->assertDatabaseHas('users', ['email' => 'andrei@prozorov.net']);
+        $this->assertTrue($user->inRole($moderatorRole));
         $this->assertFalse($user->inRole($administrators));
 
-        Mail::assertSent(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -85,27 +82,34 @@ class UserManagementTest extends TestCase
     /** @test */
     public function you_can_update_a_user_via_http()
     {
-        // Fetch a user object
+        // Arrange
         $admin = Sentinel::findUserByCredentials(['email' => 'admin@admin.com']);
+        $moderatorRole = Sentinel::findRoleBySlug('moderator');
 
-        // Attempt user creation
-        $this->signIn('admin@admin.com')
-             ->visit('/users/' . $admin->id . '/edit')
-             ->type('Olga', 'first_name')
-             ->type('Prozorov', 'last_name')
-             ->type('olga@prozorov.net', 'email')
-             ->uncheck('roles[administrator]')
-             ->check('roles[moderator]')
-             ->press('Update')
-             ->see('olga@prozorov.net has been updated.');
+        // Act
+        $this->signIn('admin@admin.com');
 
+        $response = $this->put('/users/' . $admin->id, [
+            'first_name' => 'Olga',
+            'last_name' => 'Prozorov',
+            'email' => 'olga@prozorov.net',
+            'roles' => [$moderatorRole->slug => $moderatorRole->id],
+        ]);
+             // ->type('Olga', 'first_name')
+             // ->type('Prozorov', 'last_name')
+             // ->type('olga@prozorov.net', 'email')
+             // ->uncheck('roles[administrator]')
+             // ->check('roles[moderator]')
+             // ->press('Update')
+
+        // Assert
         $user = Sentinel::findUserByCredentials(['email' => 'olga@prozorov.net']);
         $administrators = Sentinel::findRoleBySlug('administrator');
         $moderators = Sentinel::findRoleBySlug('moderator');
 
-        // Verify
-        $this->seeInDatabase('users', ['email' => 'olga@prozorov.net']);
-        $this->missingFromDatabase('users', ['email' => 'admin@admin.com']);
+        $response->assertRedirect('/users');
+        $this->assertDatabaseHas('users', ['email' => 'olga@prozorov.net']);
+        $this->assertDatabaseMissing('users', ['email' => 'admin@admin.com']);
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
     }
@@ -113,35 +117,32 @@ class UserManagementTest extends TestCase
     /** @test */
     public function you_can_update_a_user_via_ajax()
     {
-        // Fetch a user object
+        // Arrange
         $admin = Sentinel::findUserByCredentials(['email' => 'admin@admin.com']);
-
-        // Specify that this is an ajax request
         $headers = [
             'X-Requested-With' => 'XMLHttpRequest',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
+        $moderatorRole = Sentinel::findRoleBySlug('moderator');
 
-        // Start a qualified user session
+        // Act
         $this->signIn('admin@admin.com');
 
-        // Attempt user update
-        $this->put('/users/' . $admin->id, [
+        $response = $this->put('/users/' . $admin->id, [
             'first_name' => 'Olga',
             'last_name' => 'Prozorov',
             'email' => 'olga@prozorov.net',
-            'roles' => ['moderator' => 2]
-        ], $headers)->seeJson([
-             'email' => 'olga@prozorov.net',
-        ]);
+            'roles' => [$moderatorRole->slug => $moderatorRole->id]
+        ], $headers);
 
+        // Assert
         $user = Sentinel::findUserByCredentials(['email' => 'olga@prozorov.net']);
         $administrators = Sentinel::findRoleBySlug('administrator');
         $moderators = Sentinel::findRoleBySlug('moderator');
 
-        // Verify
-        $this->seeInDatabase('users', ['email' => 'olga@prozorov.net']);
-        $this->missingFromDatabase('users', ['email' => 'admin@admin.com']);
+        $response->assertJsonFragment(['email' => 'olga@prozorov.net']);
+        $this->assertDatabaseHas('users', ['email' => 'olga@prozorov.net']);
+        $this->assertDatabaseMissing('users', ['email' => 'admin@admin.com']);
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
     }
@@ -149,41 +150,37 @@ class UserManagementTest extends TestCase
     /** @test */
     public function you_can_remove_a_user_via_http()
     {
-        // Fetch a user object
+        // Arrange
         $user = Sentinel::findUserByCredentials(['email' => 'user@user.com']);
 
         // Attempt user removal
-        $this->signIn('admin@admin.com')
-             ->delete('/users/' . $user->id, [
-                '_token' => $this->getCsrfToken(),
-                '_method' => 'delete'
-            ])->followRedirects()
-            ->see('user@user.com has been removed.');
+        $this->signIn('admin@admin.com');
+        $response = $this->delete('/users/' . $user->id, [
+            '_token' => $this->getCsrfToken(),
+            '_method' => 'delete'
+        ]);
 
-        // Verify
-        $this->missingFromDatabase('users', ['email' => 'user@user.com']);
+        // Assert
+        $response->assertRedirect('/users');
+        $this->assertDatabaseMissing('users', ['email' => 'user@user.com']);
     }
 
     /** @test */
     public function you_can_remove_a_user_via_ajax()
     {
-        // Fetch a user object
+        // Arrange
         $user = Sentinel::findUserByCredentials(['email' => 'user@user.com']);
-
-        // Specify that this is an ajax request
         $headers = [
             'X-Requested-With' => 'XMLHttpRequest',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
-        // Start a qualified user session
+        // Act
         $this->signIn('admin@admin.com');
+        $response = $this->delete('/users/' . $user->id, [], $headers);
 
-        // Attempt user removal
-        $this->delete('/users/' . $user->id, [], $headers)
-             ->seeJson(['user@user.com has been removed.']);
-
-        // Verify
-        $this->missingFromDatabase('users', ['email' => 'user@user.com']);
+        // Assert
+        $response->assertJsonFragment(['user@user.com has been removed.']);
+        $this->assertDatabaseMissing('users', ['email' => 'user@user.com']);
     }
 }

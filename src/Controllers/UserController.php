@@ -153,9 +153,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Decode the user id
-        // $id = $this->decode($hash);
-
         // Validate the form data
         $result = $this->validate($request, [
             'email' => 'required|email|max:255|unique:users,email,'.$id,
