@@ -69,24 +69,24 @@ $ php artisan db:seed --class="SentinelDatabaseSeeder"
 You will also need to add these routes to your ```routes.php``` file:
 ```php
 // Authorization
-Route::get('/login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
-Route::post('/login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
-Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\SessionController@getLogout']);
+Route::get('/login', 'Auth\SessionController@getLogin')->name('auth.login.form');
+Route::post('/login', 'Auth\SessionController@postLogin')->name('auth.login.attempt');
+Route::get('/logout', 'Auth\SessionController@getLogout')->name('auth.logout');
 
 // Registration
-Route::get('register', ['as' => 'auth.register.form', 'uses' => 'Auth\RegistrationController@getRegister']);
-Route::post('register', ['as' => 'auth.register.attempt', 'uses' => 'Auth\RegistrationController@postRegister']);
+Route::get('register', 'Auth\RegistrationController@getRegister')->name('auth.register.form');
+Route::post('register', 'Auth\RegistrationController@postRegister')->name('auth.register.attempt');
 
 // Activation
-Route::get('activate/{code}', ['as' => 'auth.activation.attempt', 'uses' => 'Auth\RegistrationController@getActivate']);
-Route::get('resend', ['as' => 'auth.activation.request', 'uses' => 'Auth\RegistrationController@getResend']);
-Route::post('resend', ['as' => 'auth.activation.resend', 'uses' => 'Auth\RegistrationController@postResend']);
+Route::get('activate/{code}', 'Auth\RegistrationController@getActivate')->name('auth.activation.attempt');
+Route::get('resend', 'Auth\RegistrationController@getResend')->name('auth.activation.request');
+Route::post('resend', 'Auth\RegistrationController@postResend')->name('auth.activation.resend');
 
 // Password Reset
-Route::get('password/reset/{code}', ['as' => 'auth.password.reset.form', 'uses' => 'Auth\PasswordController@getReset']);
-Route::post('password/reset/{code}', ['as' => 'auth.password.reset.attempt', 'uses' => 'Auth\PasswordController@postReset']);
-Route::get('password/reset', ['as' => 'auth.password.request.form', 'uses' => 'Auth\PasswordController@getRequest']);
-Route::post('password/reset', ['as' => 'auth.password.request.attempt', 'uses' => 'Auth\PasswordController@postRequest']);
+Route::get('password/reset/{code}', 'Auth\PasswordController@getReset')->name('auth.password.reset.form');
+Route::post('password/reset/{code}', 'Auth\PasswordController@postReset')->name('auth.password.reset.attempt');
+Route::get('password/reset', 'Auth\PasswordController@getRequest')->name('auth.password.request.form');
+Route::post('password/reset', 'Auth\PasswordController@postRequest')->name('auth.password.request.attempt');
 
 // Users
 Route::resource('users', 'UserController');
