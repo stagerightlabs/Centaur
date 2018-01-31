@@ -69,9 +69,9 @@ $ php artisan db:seed --class="SentinelDatabaseSeeder"
 You will also need to add these routes to your ```routes.php``` file:
 ```php
 // Authorization
-Route::get('/login', 'Auth\SessionController@getLogin')->name('auth.login.form');
-Route::post('/login', 'Auth\SessionController@postLogin')->name('auth.login.attempt');
-Route::get('/logout', 'Auth\SessionController@getLogout')->name('auth.logout');
+Route::get('login', 'Auth\SessionController@getLogin')->name('auth.login.form');
+Route::post('login', 'Auth\SessionController@postLogin')->name('auth.login.attempt');
+Route::any('logout', 'Auth\SessionController@getLogout')->name('auth.logout');
 
 // Registration
 Route::get('register', 'Auth\RegistrationController@getRegister')->name('auth.register.form');
@@ -95,9 +95,9 @@ Route::resource('users', 'UserController');
 Route::resource('roles', 'RoleController');
 
 // Dashboard
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => function() {
-    return view('centaur.dashboard');
-}]);
+Route::get('dashboard', function () {
+    return view('Centaur::dashboard');
+})->name('dashboard');
 ```
 
 This is only meant to be a starting point; you can change them as you see fit.  Make sure you read through your new Auth Controllers and understand how they work before you make any changes.

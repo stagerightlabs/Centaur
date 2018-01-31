@@ -3,12 +3,11 @@
 /**************************************************************************
  * Centaur Routes
  **************************************************************************/
-Route::group(['namespace' => '\Centaur\Controllers'], function()
-{
+Route::group(['namespace' => '\Centaur\Controllers'], function () {
     // Authorization
-    Route::get('/login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
-    Route::post('/login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
-    Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\SessionController@getLogout']);
+    Route::get('login', ['as' => 'auth.login.form', 'uses' => 'Auth\SessionController@getLogin']);
+    Route::post('login', ['as' => 'auth.login.attempt', 'uses' => 'Auth\SessionController@postLogin']);
+    Route::any('logout', ['as' => 'auth.logout', 'uses' => 'Auth\SessionController@getLogout']);
 
     // Registration
     Route::get('register', ['as' => 'auth.register.form', 'uses' => 'Auth\RegistrationController@getRegister']);
@@ -33,6 +32,6 @@ Route::group(['namespace' => '\Centaur\Controllers'], function()
 });
 
 // Dashboard
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => function() {
+Route::get('dashboard', function () {
     return view('Centaur::dashboard');
-}]);
+})->name('dashboard');
