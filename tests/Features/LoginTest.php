@@ -4,8 +4,10 @@ namespace Centaur\Tests\Integrated;
 
 use Sentinel;
 use Centaur\Tests\TestCase;
+use Illuminate\Foundation\Auth\User;
 use Cartalyst\Sentinel\Users\EloquentUser;
-use Symfony\Component\HttpFoundation\Cookie;
+use Cartalyst\Sentinel\Cookies\IlluminateCookie;
+use Cartalyst\Sentinel\Persistences\EloquentPersistence;
 
 class LoginTest extends TestCase
 {
@@ -31,19 +33,21 @@ class LoginTest extends TestCase
     public function a_user_can_login_via_http_and_be_rememebered()
     {
         // Arrange
-        // There is already a user account in the stubbed sqlite file
+        $user = User::where('email', 'admin@admin.com')->first();
 
         // Act
         $response = $this->post('/login', [
-            'email' => 'admin@admin.com',
+            'email' => $user->email,
             'password' => 'password',
             'remember' => 'true',
         ]);
 
         // Assert
-        $response->assertRedirect('/dashboard');
+        $persistence = EloquentPersistence::where('user_id', $user->id)->first();
         $this->assertInstanceOf(EloquentUser::class, Sentinel::check('admin@admin.com'));
-        $this->assertInstanceOf(Cookie::class, $this->app['sentinel.cookie']->get());
+        $this->assertInstanceOf(IlluminateCookie::class, $this->app['sentinel.cookie']);
+        $this->assertEquals($persistence->code, $this->app['sentinel.cookie']->get());
+        $response->assertRedirect('/dashboard');
     }
 
     /** @test */

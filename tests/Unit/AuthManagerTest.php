@@ -9,6 +9,7 @@ use Centaur\Replies\FailureReply;
 use Centaur\Replies\SuccessReply;
 use Centaur\Replies\ExceptionReply;
 use Cartalyst\Sentinel\Users\UserInterface;
+use Cartalyst\Sentinel\Cookies\IlluminateCookie;
 use Cartalyst\Sentinel\Activations\EloquentActivation;
 
 class AuthManagerTest extends TestCase
@@ -46,11 +47,11 @@ class AuthManagerTest extends TestCase
 
         // Attempt the Login
         $result = $this->authManager->authenticate($credentials, $remember);
-        $cookie = $this->app['sentinel.cookie']->get();
+        $cookie = $this->app['sentinel.cookie'];
 
         // Verify
         $this->assertInstanceOf(SuccessReply::class, $result);
-        $this->assertInstanceOf(\Symfony\Component\HttpFoundation\Cookie::class, $cookie);
+        $this->assertInstanceOf(IlluminateCookie::class, $cookie);
     }
 
     /** @test */

@@ -9,6 +9,10 @@ use Centaur\Console\CentaurScaffold;
 use Centaur\Console\CentaurPublisher;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Cartalyst\Sentinel\Laravel\Facades\Reminder;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class CentaurServiceProvider extends ServiceProvider
 {
@@ -57,13 +61,13 @@ class CentaurServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the Sentinel Service Provider
-        $this->app->register('Cartalyst\Sentinel\Laravel\SentinelServiceProvider');
+        $this->app->register(SentinelServiceProvider::class);
 
         // Load the Sentry and Hashid Facade Aliases
         $loader = AliasLoader::getInstance();
-        $loader->alias('Activation', 'Cartalyst\Sentinel\Laravel\Facades\Activation');
-        $loader->alias('Reminder', 'Cartalyst\Sentinel\Laravel\Facades\Reminder');
-        $loader->alias('Sentinel', 'Cartalyst\Sentinel\Laravel\Facades\Sentinel');
+        $loader->alias('Activation', Activation::class);
+        $loader->alias('Reminder', Reminder::class);
+        $loader->alias('Sentinel', Sentinel::class);
     }
     /**
      * Get the services provided by the provider.
@@ -80,7 +84,7 @@ class CentaurServiceProvider extends ServiceProvider
     private function registerArtisanCommands()
     {
         // Register the Scaffold command
-        $this->app->singleton('centaur.scaffold', function($app) {
+        $this->app->singleton('centaur.scaffold', function ($app) {
             return new CentaurScaffold(
                 $app->make('files')
             );
@@ -88,7 +92,7 @@ class CentaurServiceProvider extends ServiceProvider
         $this->commands('centaur.scaffold');
 
         // Register the Spruce command
-        $this->app->singleton('centaur.spruce', function($app) {
+        $this->app->singleton('centaur.spruce', function ($app) {
             return new CentaurSpruce(
                 $app->make('files')
             );
