@@ -16,6 +16,7 @@ Make sure you use the version most appropriate for the type of Laravel applicati
 | 5.3.*  | 3.*  | ```"srlabs/centaur": "3.*"``` |
 | 5.4.*  | 4.*  | ```"srlabs/centaur": "4.*"``` |
 | 5.5.*  | 5.*  | ```"srlabs/centaur": "5.*"``` |
+| 5.6.*  | 6.*  | ```"srlabs/centaur": "6.*"``` |
 
 ## Installation
 **Install the Package Via Composer:**
