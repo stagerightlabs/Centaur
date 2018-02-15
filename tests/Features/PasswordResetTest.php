@@ -28,7 +28,7 @@ class PasswordReminderTest extends TestCase
 
         // Assert
         $response->assertSessionHas('success', 'Password reset successful.');
-        Mail::assertQueued(CentaurPasswordReset::class, function($mail) {
+        Mail::assertQueued(CentaurPasswordReset::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -46,7 +46,7 @@ class PasswordReminderTest extends TestCase
 
         // Assert
         $response->assertSessionHas('error', 'Invalid or expired password reset code; please request a new link.');
-        Mail::assertQueued(CentaurPasswordReset::class, function($mail) {
+        Mail::assertQueued(CentaurPasswordReset::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -57,7 +57,7 @@ class PasswordReminderTest extends TestCase
         // Arrange
         Mail::fake();
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $andrei = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
@@ -81,7 +81,7 @@ class PasswordReminderTest extends TestCase
         // Arrange
         Mail::fake();
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
@@ -95,5 +95,4 @@ class PasswordReminderTest extends TestCase
         // Assert
         $response->assertJsonFragment(["message" => "Invalid or expired password reset code; please request a new link."]);
     }
-
 }

@@ -38,7 +38,7 @@ class RoleManagementTest extends TestCase
         // Arrange
         $this->signIn('admin@admin.com');
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -94,7 +94,7 @@ class RoleManagementTest extends TestCase
         // Arrange
         $role = Sentinel::findRoleByName('Subscriber');
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $this->signIn('admin@admin.com');
@@ -144,7 +144,7 @@ class RoleManagementTest extends TestCase
         // Arrange
         $role = Sentinel::findRoleByName('Subscriber');
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $this->signIn('admin@admin.com');

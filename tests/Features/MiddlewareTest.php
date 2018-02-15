@@ -19,7 +19,7 @@ class MiddlewareTest extends TestCase
     {
         // Arrange
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -49,7 +49,7 @@ class MiddlewareTest extends TestCase
         // Arrange
         // This user account already exists in the stubbed sqlite file
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $this->signIn('user@user.com');
@@ -79,7 +79,7 @@ class MiddlewareTest extends TestCase
     {
         // Arrange
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $this->signIn('user@user.com');
@@ -105,11 +105,11 @@ class MiddlewareTest extends TestCase
     }
 
     /** @test */
-    public function it_prevents_api_access_for_authenticated_users_for_guest_endpoints()
+    public function it_prevents_api_access_for_authenticated_users_to_guest_endpoints()
     {
         // Arrange
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $this->signIn('user@user.com');

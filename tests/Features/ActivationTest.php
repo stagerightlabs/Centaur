@@ -45,7 +45,7 @@ class ActivationTest extends TestCase
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
         $activation = app()->make('sentinel.activations')->create($user);
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -63,7 +63,7 @@ class ActivationTest extends TestCase
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
         $activation = app()->make('sentinel.activations')->create($user);
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -100,7 +100,7 @@ class ActivationTest extends TestCase
         Mail::fake();
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -113,5 +113,4 @@ class ActivationTest extends TestCase
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
-
 }

@@ -24,7 +24,7 @@ class RegistrationTest extends TestCase
         // Assert
         $response->assertSessionHas('success', 'Registration complete.  Please check your email for activation instructions.');
         $this->assertDatabaseHas('users', ['email' => 'andrei@prozorov.net']);
-        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -53,7 +53,7 @@ class RegistrationTest extends TestCase
         // Arrange
         Mail::fake();
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -69,7 +69,7 @@ class RegistrationTest extends TestCase
              'message' => 'Registration complete.  Please check your email for activation instructions.',
         ]);
         $this->assertDatabaseHas('users', ['email' => 'andrei@prozorov.net']);
-        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -80,7 +80,7 @@ class RegistrationTest extends TestCase
         // Arrange
         // There is already an 'admin@admin.com' user in the stubbed sqlite file
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -91,9 +91,10 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password'
         ], $headers);
 
+        // $response->dump();
+
         // Assert
         $response->assertStatus(422);
         $response->assertJsonFragment(['email' => ["The email has already been taken."]]);
     }
-
 }

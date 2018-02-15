@@ -100,7 +100,7 @@ class LoginTest extends TestCase
     {
         // Arrange
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -120,7 +120,7 @@ class LoginTest extends TestCase
     {
         // Arrange
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 

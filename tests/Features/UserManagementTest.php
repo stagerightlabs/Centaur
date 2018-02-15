@@ -37,7 +37,7 @@ class UserManagementTest extends TestCase
         $this->assertTrue($user->inRole($moderators));
         $this->assertFalse($user->inRole($administrators));
 
-        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -49,7 +49,7 @@ class UserManagementTest extends TestCase
         $moderatorRole = Sentinel::findRoleBySlug('moderator');
         Mail::fake();
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
@@ -74,7 +74,7 @@ class UserManagementTest extends TestCase
         $this->assertTrue($user->inRole($moderatorRole));
         $this->assertFalse($user->inRole($administrators));
 
-        Mail::assertQueued(CentaurWelcomeEmail::class, function($mail) {
+        Mail::assertQueued(CentaurWelcomeEmail::class, function ($mail) {
             return $mail->hasTo('andrei@prozorov.net');
         });
     }
@@ -95,12 +95,12 @@ class UserManagementTest extends TestCase
             'email' => 'olga@prozorov.net',
             'roles' => [$moderatorRole->slug => $moderatorRole->id],
         ]);
-             // ->type('Olga', 'first_name')
-             // ->type('Prozorov', 'last_name')
-             // ->type('olga@prozorov.net', 'email')
-             // ->uncheck('roles[administrator]')
-             // ->check('roles[moderator]')
-             // ->press('Update')
+        // ->type('Olga', 'first_name')
+        // ->type('Prozorov', 'last_name')
+        // ->type('olga@prozorov.net', 'email')
+        // ->uncheck('roles[administrator]')
+        // ->check('roles[moderator]')
+        // ->press('Update')
 
         // Assert
         $user = Sentinel::findUserByCredentials(['email' => 'olga@prozorov.net']);
@@ -120,7 +120,7 @@ class UserManagementTest extends TestCase
         // Arrange
         $admin = Sentinel::findUserByCredentials(['email' => 'admin@admin.com']);
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
         $moderatorRole = Sentinel::findRoleBySlug('moderator');
@@ -171,7 +171,7 @@ class UserManagementTest extends TestCase
         // Arrange
         $user = Sentinel::findUserByCredentials(['email' => 'user@user.com']);
         $headers = [
-            'X-Requested-With' => 'XMLHttpRequest',
+            'Accept' => 'application/json',
             'X-CSRF-TOKEN' => $this->getCsrfToken(),
         ];
 
