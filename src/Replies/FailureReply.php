@@ -27,7 +27,7 @@ class FailureReply extends Reply
     {
         $request = app('request');
 
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->expectsJson()) {
             return new JsonResponse($this->toArray(), $this->statusCode);
         }
 

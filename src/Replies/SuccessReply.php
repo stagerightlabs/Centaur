@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 class SuccessReply extends Reply
 {
     /**
-     * The reccomended status code to include with the server response
+     * The recommended status code to include with the server response
      * @var integer
      */
     protected $statusCode = 200;
@@ -26,8 +26,9 @@ class SuccessReply extends Reply
     public function dispatch($url = '/')
     {
         $request = app('request');
+        // dd($this->toArray());
 
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->expectsJson()) {
             return new JsonResponse($this->toArray(), $this->statusCode);
         }
 

@@ -27,7 +27,7 @@ abstract class Reply implements Jsonable, Arrayable
     protected $message = '';
 
     /**
-     * The reccomended status code to include with the server response
+     * The recommended status code to include with the server response
      * @var integer
      */
     protected $statusCode = 400;

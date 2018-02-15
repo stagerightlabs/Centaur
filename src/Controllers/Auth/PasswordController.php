@@ -65,7 +65,7 @@ class PasswordController extends Controller
 
         $message = 'Instructions for changing your password will be sent to your email address if it is associated with a valid account.';
 
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json(['message' => $message, 'code' => $code], 200);
         }
 

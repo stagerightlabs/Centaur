@@ -31,7 +31,7 @@ class SentinelUserHasAccess
 
     public function denied($request)
     {
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             $message = $this->translate('unauthorized', 'Unauthorized');
             return response()->json(['error' => $message], 401);
         } else {

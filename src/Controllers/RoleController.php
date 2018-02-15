@@ -75,8 +75,8 @@ class RoleController extends Controller
         $role->permissions = $permissions;
         $role->save();
 
-         // All done
-        if ($request->ajax()) {
+        // All done
+        if ($request->expectsJson()) {
             return response()->json(['role' => $role], 200);
         }
 
@@ -139,7 +139,7 @@ class RoleController extends Controller
         // Fetch the role object
         $role = $this->roleRepository->findById($id);
         if (!$role) {
-            if ($request->ajax()) {
+            if ($request->expectsJson()) {
                 return response()->json("Invalid role.", 422);
             }
             session()->flash('error', 'Invalid role.');
@@ -161,7 +161,7 @@ class RoleController extends Controller
         $role->save();
 
         // All done
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json(['role' => $role], 200);
         }
 
@@ -186,7 +186,7 @@ class RoleController extends Controller
 
         // All done
         $message = "Role '{$role->name}' has been removed.";
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json([$message], 200);
         }
 

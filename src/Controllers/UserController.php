@@ -174,7 +174,7 @@ class UserController extends Controller
         // Fetch the user object
         $user = $this->userRepository->findById($id);
         if (!$user) {
-            if ($request->ajax()) {
+            if ($request->expectsJson()) {
                 return response()->json("Invalid user.", 422);
             }
             session()->flash('error', 'Invalid user.');
@@ -189,7 +189,7 @@ class UserController extends Controller
         $user->roles()->sync($roleIds);
 
         // All done
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json(['user' => $user], 200);
         }
 
@@ -213,7 +213,7 @@ class UserController extends Controller
         if (Sentinel::getUser()->id == $user->id) {
             $message = "You cannot remove yourself!";
 
-            if ($request->ajax()) {
+            if ($request->expectsJson()) {
                 return response()->json($message, 422);
             }
             session()->flash('error', $message);
@@ -226,7 +226,7 @@ class UserController extends Controller
 
         // All done
         $message = "{$user->email} has been removed.";
-        if ($request->ajax()) {
+        if ($request->expectsJson()) {
             return response()->json([$message], 200);
         }
 

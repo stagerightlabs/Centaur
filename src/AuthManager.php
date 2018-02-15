@@ -44,7 +44,7 @@ class AuthManager
         }
 
         if ($user) {
-            $message = request()->ajax() ?
+            $message = request()->expectsJson() ?
                 $this->translate('session_initated', 'You have been authenticated.') : null;
             return new SuccessReply($message);
         }

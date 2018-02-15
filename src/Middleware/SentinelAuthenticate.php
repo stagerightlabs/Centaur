@@ -19,7 +19,7 @@ class SentinelAuthenticate
     public function handle($request, Closure $next)
     {
         if (!Sentinel::check()) {
-            if ($request->ajax()) {
+            if ($request->expectsJson()) {
                 $message = $this->translate('unauthorized', 'Unauthorized');
                 return response()->json(['error' => $message], 401);
             } else {
