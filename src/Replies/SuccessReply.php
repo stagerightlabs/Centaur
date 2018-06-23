@@ -26,9 +26,8 @@ class SuccessReply extends Reply
     public function dispatch($url = '/')
     {
         $request = app('request');
-        // dd($this->toArray());
 
-        if ($request->expectsJson()) {
+        if ($request->wantsJson()) {
             return new JsonResponse($this->toArray(), $this->statusCode);
         }
 

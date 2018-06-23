@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 class FailureReply extends Reply
 {
     /**
-     * The reccomended status code to include with the server response
+     * The default status code to include with the server response
      * @var integer
      */
     protected $statusCode = 422;
@@ -25,9 +25,7 @@ class FailureReply extends Reply
      */
     public function dispatch($url = '/')
     {
-        $request = app('request');
-
-        if ($request->expectsJson()) {
+        if (request()->wantsJson()) {
             return new JsonResponse($this->toArray(), $this->statusCode);
         }
 
@@ -37,6 +35,7 @@ class FailureReply extends Reply
         }
 
         // Go to the specified url
-        return redirect($url);
+        return redirect($this->determineRedirectUrl())
+            ->withInput(request()->input());
     }
 }

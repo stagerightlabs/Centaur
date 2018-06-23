@@ -4,6 +4,7 @@ namespace Centaur\Replies;
 
 use Exception;
 use Illuminate\Http\Response;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
@@ -235,5 +236,20 @@ abstract class Reply implements Jsonable, Arrayable
         }
 
         return null;
+    }
+
+    /**
+     * Determine the URL we should redirect to.
+     * Borrowed from Illuminate\Foundation\Validation\ValidatesRequest
+     *
+     * @return string
+     */
+    protected function determineRedirectUrl()
+    {
+        if ($this->returnUrl) {
+            return $this->returnUrl;
+        }
+
+        return app(UrlGenerator::class)->previous();
     }
 }

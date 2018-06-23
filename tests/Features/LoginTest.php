@@ -30,7 +30,7 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_login_via_http_and_be_rememebered()
+    public function a_user_can_login_via_http_and_be_remembered()
     {
         // Arrange
         $user = User::where('email', 'admin@admin.com')->first();
@@ -57,13 +57,18 @@ class LoginTest extends TestCase
         // There is already a user account in the stubbed sqlite file
 
         // Act
-        $response = $this->post('/login', [
+        $response = $this->from(route('auth.login.form'))->post('/login', [
             'email' => 'admin@admin.com',
             'password' => 'wrong_password'
         ]);
 
         // Assert
+        $response->assertRedirect(route('auth.login.form'));
         $response->assertSessionHas('error', 'Access denied due to invalid credentials.');
+        $response->assertSessionHas('_old_input', [
+            'email' => 'admin@admin.com',
+            'password' => 'wrong_password'
+        ]);
     }
 
     /** @test */
