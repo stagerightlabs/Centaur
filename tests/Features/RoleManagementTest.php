@@ -139,7 +139,7 @@ class RoleManagementTest extends TestCase
     }
 
     /** @test */
-    public function you_can_remove_a_user_via_ajax()
+    public function you_can_remove_a_role_via_ajax()
     {
         // Arrange
         $role = Sentinel::findRoleByName('Subscriber');
@@ -155,5 +155,24 @@ class RoleManagementTest extends TestCase
         // Verify
         $response->assertJsonFragment(["Role 'Subscriber' has been removed."]);
         $this->assertDatabaseMissing('roles', ['name' => 'Subscriber']);
+    }
+
+    /** @test */
+    public function you_cannot_remove_roles_you_currently_belong_to()
+    {
+        // Arrange
+        $role = Sentinel::findRoleByName('Administrator');
+        $headers = [
+            'Accept' => 'application/json',
+            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+        ];
+        $this->signIn('admin@admin.com');
+
+        // Act
+        $response = $this->delete('/roles/' . $role->id, [], $headers);
+
+        // Verify
+        $response->assertStatus(422);
+        $this->assertDatabaseHas('roles', ['name' => 'Administrator']);
     }
 }

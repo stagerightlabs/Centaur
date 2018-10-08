@@ -181,6 +181,15 @@ class RoleController extends Controller
         // $id = $this->decode($hash);
         $role = $this->roleRepository->findById($id);
 
+        // Prevent the deletion of roles have the current user as a member
+        if (Sentinel::inRole($role)) {
+            if ($request->expectsJson()) {
+                return response()->json("You must leave this group before it can be removed.", 422);
+            }
+            session()->flash('error', "You must leave this group before it can be removed.");
+            return redirect()->back()->withInput();
+        }
+
         // Remove the role
         $role->delete();
 
