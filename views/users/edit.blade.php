@@ -39,7 +39,7 @@
                         {!! ($errors->has('password') ? $errors->first('password', '<p class="text-danger">:message</p>') : '') !!}
                     </div>
                     <div class="form-group {{ ($errors->has('password_confirmation')) ? 'has-error' : '' }}">
-                        <input class="form-control" placeholder="Confirm Password" name="password_confirmation" type="password" value="{{ old('password_confirmation') }}" />
+                        <input class="form-control" placeholder="Confirm Password" name="password_confirmation" type="password" />
                         {!! ($errors->has('password_confirmation') ? $errors->first('password_confirmation', '<p class="text-danger">:message</p>') : '') !!}
                     </div>
                     <input name="_token" value="{{ csrf_token() }}" type="hidden">
