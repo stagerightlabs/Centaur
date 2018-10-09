@@ -25,7 +25,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $userRoleIds = Sentinel::getUser()->roles()->pluck('id'); ?>
                         @foreach ($roles as $role)
                             <tr>
                                 <td>{{ $role->name }}</td>

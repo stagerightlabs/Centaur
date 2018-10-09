@@ -2,9 +2,9 @@
 
 namespace Centaur\Controllers;
 
-use Sentinel;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class RoleController extends Controller
@@ -30,8 +30,10 @@ class RoleController extends Controller
     public function index()
     {
         $roles = $this->roleRepository->createModel()->all();
+        $userRoleIds = Sentinel::getUser()->roles()->pluck('id');
 
         return view('Centaur::roles.index')
+            ->with('userRoleIds', $userRoleIds)
             ->with('roles', $roles);
     }
 
