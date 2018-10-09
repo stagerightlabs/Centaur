@@ -2,9 +2,9 @@
 
 namespace Centaur\Controllers;
 
-use Sentinel;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Cartalyst\Sentinel\Users\IlluminateUserRepository;
 
 class RoleController extends Controller
@@ -30,8 +30,10 @@ class RoleController extends Controller
     public function index()
     {
         $roles = $this->roleRepository->createModel()->all();
+        $userRoleIds = Sentinel::getUser()->roles()->pluck('id');
 
         return view('Centaur::roles.index')
+            ->with('userRoleIds', $userRoleIds)
             ->with('roles', $roles);
     }
 
@@ -180,6 +182,15 @@ class RoleController extends Controller
         // Fetch the role object
         // $id = $this->decode($hash);
         $role = $this->roleRepository->findById($id);
+
+        // Prevent the deletion of roles have the current user as a member
+        if (Sentinel::inRole($role)) {
+            if ($request->expectsJson()) {
+                return response()->json("You must leave this group before it can be removed.", 422);
+            }
+            session()->flash('error', "You must leave this group before it can be removed.");
+            return redirect()->back()->withInput();
+        }
 
         // Remove the role
         $role->delete();
