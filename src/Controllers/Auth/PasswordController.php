@@ -70,7 +70,7 @@ class PasswordController extends Controller
         }
 
         Session::flash('success', $message);
-        return redirect('/dashboard');
+        return redirect()->route('dashboard');
     }
 
 
