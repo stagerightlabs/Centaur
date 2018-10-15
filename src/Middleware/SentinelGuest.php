@@ -23,7 +23,7 @@ class SentinelGuest
                 $message = $this->translate('unauthorized', 'Unauthorized');
                 return response()->json(['error' => $message], 401);
             } else {
-                return redirect('/dashboard');
+                return redirect()->route('dashboard');
             }
         }
 
