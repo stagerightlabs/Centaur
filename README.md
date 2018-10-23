@@ -11,12 +11,11 @@ Make sure you use the version most appropriate for the type of Laravel applicati
 
 | Laravel Version  | Centaur Version  | Packagist Branch |
 |---|---|---|
-| 5.1.*  | 1.*  | ```"srlabs/centaur": "1.*"``` |
-| 5.2.*  | 2.*  | ```"srlabs/centaur": "2.*"``` |
-| 5.3.*  | 3.*  | ```"srlabs/centaur": "3.*"``` |
-| 5.4.*  | 4.*  | ```"srlabs/centaur": "4.*"``` |
 | 5.5.*  | 5.*  | ```"srlabs/centaur": "5.*"``` |
 | 5.6.*  | 6.*  | ```"srlabs/centaur": "6.*"``` |
+| 5.7.*  | 7.*  | ```"srlabs/centaur": "7.*"``` |
+
+If you are using an older version of Laravel, there are [other versions](https://packagist.org/packages/srlabs/centaur) available.
 
 ## Installation
 **Install the Package Via Composer:**
