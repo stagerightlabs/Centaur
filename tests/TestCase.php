@@ -31,7 +31,7 @@ class TestCase extends OrchestraTestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -91,24 +91,6 @@ class TestCase extends OrchestraTestCase
     public function prepareTestingDatabase()
     {
         exec('cp ' . __DIR__ . '/data/staging.sqlite ' . __DIR__ . '/data/database.sqlite');
-    }
-
-    /**
-     * Overide the default application exception handler
-     *
-     * Thanks Adam!
-     * https://gist.github.com/adamwathan/125847c7e3f16b88fa33a9f8b42333da
-     */
-    protected function disableExceptionHandling()
-    {
-        $this->oldExceptionHandler = $this->app->make(ExceptionHandler::class);
-        $this->app->instance(ExceptionHandler::class, new class extends Handler {
-            public function __construct() {}
-            public function report(\Exception $e) {}
-            public function render($request, \Exception $e) {
-                throw $e;
-            }
-        });
     }
 
     /**

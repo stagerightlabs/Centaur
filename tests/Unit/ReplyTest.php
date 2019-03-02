@@ -15,7 +15,7 @@ class ReplyTest extends TestCase
     /** @var Centaur\AuthManager */
     protected $authManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->authManager = $this->app->make(AuthManager::class);
@@ -115,6 +115,5 @@ class ReplyTest extends TestCase
         ];
 
         $this->assertEquals($expectation, $reply->toArray());
-
     }
 }
