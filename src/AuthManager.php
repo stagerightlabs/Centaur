@@ -2,15 +2,15 @@
 
 namespace Centaur;
 
-use DB;
-use Lang;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Centaur\Dispatches\Reply;
 use InvalidArgumentException;
 use Centaur\Replies\FailureReply;
 use Centaur\Replies\SuccessReply;
 use Centaur\Replies\ExceptionReply;
+use Illuminate\Support\Facades\Lang;
 use Cartalyst\Sentinel\Users\UserInterface;
 
 class AuthManager
@@ -45,7 +45,7 @@ class AuthManager
 
         if ($user) {
             $message = request()->expectsJson() ?
-                $this->translate('session_initated', 'You have been authenticated.') : null;
+                $this->translate('session_initiated', 'You have been authenticated.') : null;
             return new SuccessReply($message);
         }
 
@@ -62,6 +62,8 @@ class AuthManager
      */
     public function logout(UserInterface $user = null, $everywhere = false)
     {
+        $everywhere = is_null($everywhere) ? false : $everywhere; // bc
+
         try {
             $user = $this->sentinel->logout($user, $everywhere);
         } catch (Exception $e) {
@@ -195,11 +197,11 @@ class AuthManager
     /**
      * Return any caught exceptions in a ExceptionDispatch DTO
      * @param  Exception $e
-     * @return ExcpetionDispatch
+     * @return ExceptionDispatch
      */
     protected function returnException(Exception $e)
     {
-        $key = snake_case(class_basename($e));
+        $key = Str::snake(class_basename($e));
         $message = $this->translate($key, $e->getMessage());
 
         return new ExceptionReply($message, [], $e);

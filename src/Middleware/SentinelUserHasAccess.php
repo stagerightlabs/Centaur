@@ -3,7 +3,7 @@
 namespace Centaur\Middleware;
 
 use Closure;
-use Sentinel;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class SentinelUserHasAccess
 {

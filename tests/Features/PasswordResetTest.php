@@ -3,10 +3,10 @@
 namespace Centaur\Tests\Integrated;
 
 use Mail;
-use Reminder;
-use Sentinel;
 use Centaur\Tests\TestCase;
 use Centaur\Mail\CentaurPasswordReset;
+use Cartalyst\Sentinel\Laravel\Facades\Reminder;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class PasswordReminderTest extends TestCase
 {
@@ -18,7 +18,7 @@ class PasswordReminderTest extends TestCase
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
         $this->post('/password/reset', ['email' => 'andrei@prozorov.net']);
         $andrei = Sentinel::findByCredentials(['email' => 'andrei@prozorov.net']);
-        $reminder = Reminder::exists($andrei);
+        $reminder = Reminder::get($andrei);
 
         // Act
         $response = $this->post('/password/reset/' . $reminder->code, [
@@ -58,13 +58,13 @@ class PasswordReminderTest extends TestCase
         Mail::fake();
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $andrei = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
 
         // Act
         $responseA = $this->post('/password/reset', ['email' => 'andrei@prozorov.net'], $headers);
-        $reminder = Reminder::exists($andrei);
+        $reminder = Reminder::get($andrei);
         $responseB = $this->post('/password/reset/' . $reminder->code, [
             'password' => 'natasha',
             'password_confirmation' => 'natasha'
@@ -82,7 +82,7 @@ class PasswordReminderTest extends TestCase
         Mail::fake();
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin'], true);
 

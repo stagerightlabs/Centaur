@@ -1,6 +1,6 @@
 # Centaur
 
-[![Travis](https://img.shields.io/travis/SRLabs/Centaur.svg)](https://travis-ci.org/SRLabs/Centaur)
+[![Travis](https://img.shields.io/travis/stagerightlabs/Centaur.svg)](https://travis-ci.org/stagerightlabs/Centaur)
 [![Packagist](https://img.shields.io/packagist/dt/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
 [![Packagist](https://img.shields.io/packagist/v/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
 [![Packagist](https://img.shields.io/packagist/l/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
@@ -11,9 +11,9 @@ Make sure you use the version most appropriate for the type of Laravel applicati
 
 | Laravel Version  | Centaur Version  | Packagist Branch |
 |---|---|---|
-| 5.6.*  | 6.*  | ```"srlabs/centaur": "6.*"``` |
 | 5.7.*  | 7.*  | ```"srlabs/centaur": "7.*"``` |
 | 5.8.*  | 8.*  | ```"srlabs/centaur": "8.*"``` |
+| 6.0.*  | 9.*  | ```"srlabs/centaur": "9.*"``` |
 
 If you are using an older version of Laravel, there are [other versions](https://packagist.org/packages/srlabs/centaur) available.
 

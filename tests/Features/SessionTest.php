@@ -8,14 +8,16 @@ use Illuminate\Foundation\Auth\User;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cartalyst\Sentinel\Cookies\IlluminateCookie;
 use Cartalyst\Sentinel\Persistences\EloquentPersistence;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
-class LoginTest extends TestCase
+class SessionTest extends TestCase
 {
     /** @test */
     public function a_user_can_login_via_http()
     {
         // Arrange
         // There is already a user account in the stubbed sqlite file
+        $cookieName = $this->app['config']->get('cartalyst.sentinel.cookie');
 
         // Act
         $response = $this->post('/login', [
@@ -25,8 +27,8 @@ class LoginTest extends TestCase
 
         // Assert
         $response->assertRedirect('/dashboard');
+        $response->assertCookieMissing($cookieName);
         $this->assertInstanceOf(EloquentUser::class, Sentinel::check('admin@admin.com'));
-        $this->assertNull($this->app['sentinel.cookie']->get());
     }
 
     /** @test */
@@ -34,6 +36,7 @@ class LoginTest extends TestCase
     {
         // Arrange
         $user = User::where('email', 'admin@admin.com')->first();
+        $cookieName = $this->app['config']->get('cartalyst.sentinel.cookie');
 
         // Act
         $response = $this->post('/login', [
@@ -42,11 +45,12 @@ class LoginTest extends TestCase
             'remember' => 'true',
         ]);
 
+
         // Assert
         $persistence = EloquentPersistence::where('user_id', $user->id)->first();
         $this->assertInstanceOf(EloquentUser::class, Sentinel::check('admin@admin.com'));
         $this->assertInstanceOf(IlluminateCookie::class, $this->app['sentinel.cookie']);
-        $this->assertEquals($persistence->code, $this->app['sentinel.cookie']->get());
+        $response->assertCookie($cookieName);
         $response->assertRedirect('/dashboard');
     }
 
@@ -106,7 +110,7 @@ class LoginTest extends TestCase
         // Arrange
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -126,7 +130,7 @@ class LoginTest extends TestCase
         // Arrange
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -137,5 +141,17 @@ class LoginTest extends TestCase
 
         // Assert
         $response->assertJsonFragment(['message' => 'Access denied due to invalid credentials.']);
+    }
+
+    /** @test */
+    public function a_user_can_logout()
+    {
+        $this->signIn('admin@admin.com');
+
+        $this->assertInstanceOf(EloquentUser::class, Sentinel::check());
+
+        $response = $this->get('/logout');
+
+        $this->assertFalse(Sentinel::check());
     }
 }

@@ -12,6 +12,8 @@ class ActivationTest extends TestCase
     /** @test */
     public function a_user_can_activate_via_http()
     {
+        // $this->withoutExceptionHandling();
+
         // Arrange
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
         $activation = app()->make('sentinel.activations')->create($user);
@@ -21,7 +23,7 @@ class ActivationTest extends TestCase
 
         // Assert
         $this->assertInstanceOf(EloquentActivation::class, $activation);
-        $response->assertSessionHas('success', 'Registration complete.  You may now log in.');
+        $response->assertSessionHas('success');
     }
 
     /** @test */
@@ -46,7 +48,7 @@ class ActivationTest extends TestCase
         $activation = app()->make('sentinel.activations')->create($user);
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -64,7 +66,7 @@ class ActivationTest extends TestCase
         $activation = app()->make('sentinel.activations')->create($user);
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -101,7 +103,7 @@ class ActivationTest extends TestCase
         $user = app()->make('sentinel')->register(['email' => 'andrei@prozorov.net', 'password' => 'violin']);
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act

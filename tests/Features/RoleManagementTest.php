@@ -39,7 +39,7 @@ class RoleManagementTest extends TestCase
         $this->signIn('admin@admin.com');
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -95,7 +95,7 @@ class RoleManagementTest extends TestCase
         $role = Sentinel::findRoleByName('Subscriber');
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('admin@admin.com');
 
@@ -128,7 +128,7 @@ class RoleManagementTest extends TestCase
 
         // Act
         $response = $this->delete('/roles/' . $role->id, [
-            '_token' => $this->getCsrfToken(),
+            '_token' => csrf_token(),
             '_method' => 'delete'
         ]);
 
@@ -145,7 +145,7 @@ class RoleManagementTest extends TestCase
         $role = Sentinel::findRoleByName('Subscriber');
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('admin@admin.com');
 
@@ -164,7 +164,7 @@ class RoleManagementTest extends TestCase
         $role = Sentinel::findRoleByName('Administrator');
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('admin@admin.com');
 
