@@ -1,6 +1,6 @@
 # Centaur
 
-[![Travis](https://img.shields.io/travis/SRLabs/Centaur.svg)](https://travis-ci.org/SRLabs/Centaur)
+[![Travis](https://img.shields.io/travis/stagerightlabs/Centaur.svg)](https://travis-ci.org/stagerightlabs/Centaur)
 [![Packagist](https://img.shields.io/packagist/dt/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
 [![Packagist](https://img.shields.io/packagist/v/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
 [![Packagist](https://img.shields.io/packagist/l/SRLabs/Centaur.svg)](https://packagist.org/packages/srlabs/centaur)
