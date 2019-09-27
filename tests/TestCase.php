@@ -2,13 +2,8 @@
 
 namespace Centaur\Tests;
 
-use Session;
-use Sentinel;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Foundation\Exceptions\Handler;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Route;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
@@ -58,12 +53,12 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('mail.pretend', true);
         $app['config']->set('mail.from', ['from' => 'noreply@example.com', 'name' => null]);
 
-        // Add
-        $app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware(StartSession::class);
-        $app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware(ShareErrorsFromSession::class);
-
         // Include routes needed for testing
-        include __DIR__ . '/../src/routes.php';
+        // include __DIR__ . '/../src/routes.php';
+
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers')
+            ->group(realpath(__DIR__ . '/../src/routes.php'));
     }
 
     public function enableExceptionHandler()
@@ -100,8 +95,6 @@ class TestCase extends OrchestraTestCase
      */
     public function signIn($email)
     {
-        Session::start();
-
         $this->user = Sentinel::findUserByCredentials(['email' => $email]);
 
         if ($this->user) {
@@ -121,15 +114,5 @@ class TestCase extends OrchestraTestCase
         $this->user = null;
 
         return $this;
-    }
-
-    /**
-     * A session must be started before the csrf token will be available
-     * @return string
-     */
-    public function getCsrfToken()
-    {
-        Session::start();
-        return csrf_token();
     }
 }

@@ -20,7 +20,7 @@ class MiddlewareTest extends TestCase
         // Arrange
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -33,6 +33,8 @@ class MiddlewareTest extends TestCase
     /** @test */
     public function it_redirects_a_user_without_permissions_to_the_dashboard()
     {
+        $this->withoutExceptionHandling();
+
         // Arrange
         $this->signIn('user@user.com');
 
@@ -50,7 +52,7 @@ class MiddlewareTest extends TestCase
         // This user account already exists in the stubbed sqlite file
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('user@user.com');
 
@@ -80,7 +82,7 @@ class MiddlewareTest extends TestCase
         // Arrange
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('user@user.com');
 
@@ -110,7 +112,7 @@ class MiddlewareTest extends TestCase
         // Arrange
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $this->signIn('user@user.com');
 

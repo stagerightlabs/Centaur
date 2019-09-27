@@ -54,7 +54,7 @@ class RegistrationTest extends TestCase
         Mail::fake();
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -81,7 +81,7 @@ class RegistrationTest extends TestCase
         // There is already an 'admin@admin.com' user in the stubbed sqlite file
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act

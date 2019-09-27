@@ -131,9 +131,9 @@ class AuthManagerTest extends TestCase
         $activated = $this->app['sentinel.activations']->completed($result->user);
 
         // Verify
+        $this->assertTrue($activated);
         $this->assertInstanceOf(SuccessReply::class, $result);
         $this->assertInstanceOf(UserInterface::class, $result->user);
-        $this->assertInstanceOf(EloquentActivation::class, $activated);
     }
 
     /** @test */

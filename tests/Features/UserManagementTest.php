@@ -50,7 +50,7 @@ class UserManagementTest extends TestCase
         Mail::fake();
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
@@ -121,7 +121,7 @@ class UserManagementTest extends TestCase
         $admin = Sentinel::findUserByCredentials(['email' => 'admin@admin.com']);
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
         $moderatorRole = Sentinel::findRoleBySlug('moderator');
 
@@ -156,7 +156,7 @@ class UserManagementTest extends TestCase
         // Attempt user removal
         $this->signIn('admin@admin.com');
         $response = $this->delete('/users/' . $user->id, [
-            '_token' => $this->getCsrfToken(),
+            '_token' => csrf_token(),
             '_method' => 'delete'
         ]);
 
@@ -172,7 +172,7 @@ class UserManagementTest extends TestCase
         $user = Sentinel::findUserByCredentials(['email' => 'user@user.com']);
         $headers = [
             'Accept' => 'application/json',
-            'X-CSRF-TOKEN' => $this->getCsrfToken(),
+            'X-CSRF-TOKEN' => csrf_token(),
         ];
 
         // Act
