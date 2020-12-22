@@ -13,7 +13,7 @@ Make sure you use the version most appropriate for the type of Laravel applicati
 |---|---|---|
 | 6.0.*  | 9.*  | ```"srlabs/centaur": "9.*"``` |
 | 7.0.*  | 10.*  | ```"srlabs/centaur": "10.*"``` |
-| 8.0.*  | 11.*  | ```"srlabs/centaur": "10.*"``` |
+| 8.0.*  | 11.*  | ```"srlabs/centaur": "11.*"``` |
 
 If you are using an older version of Laravel, there are [other versions](https://packagist.org/packages/srlabs/centaur) available.
 
