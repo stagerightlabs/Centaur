@@ -4,50 +4,10 @@ on: [pull_request]
 
 jobs:
 
-  php73:
+  php81:
     runs-on: ubuntu-latest
     container:
-      image: kirschbaumdevelopment/laravel-test-runner:7.3
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Composer dependency cache
-        uses: "actions/cache@v2.0.0"
-        with:
-          path: "./vendor"
-          key: php-${{ hashFiles('composer.lock') }}
-
-      - name: Install Dependencies
-        run: composer install --no-scripts --no-ansi --no-suggest --no-progress
-
-      - name: Run test suite
-        run: ./vendor/bin/phpunit
-
-  php74:
-    runs-on: ubuntu-latest
-    container:
-      image: kirschbaumdevelopment/laravel-test-runner:7.4
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Composer dependency cache
-        uses: "actions/cache@v2.0.0"
-        with:
-          path: "./vendor"
-          key: php-${{ hashFiles('composer.lock') }}
-
-      - name: Install Dependencies
-        run: composer install --no-scripts --no-ansi --no-suggest --no-progress
-
-      - name: Run test suite
-        run: ./vendor/bin/phpunit
-
-  php80:
-    runs-on: ubuntu-latest
-    container:
-      image: kirschbaumdevelopment/laravel-test-runner:8.0
+      image: kirschbaumdevelopment/laravel-test-runner:8.1
 
     steps:
       - uses: actions/checkout@v2
