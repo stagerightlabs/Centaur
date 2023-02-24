@@ -23,3 +23,23 @@ jobs:
 
       - name: Run test suite
         run: ./vendor/bin/phpunit
+
+  php82:
+    runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:8.2
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Composer dependency cache
+        uses: "actions/cache@v2.0.0"
+        with:
+          path: "./vendor"
+          key: php-${{ hashFiles('composer.lock') }}
+
+      - name: Install Dependencies
+        run: composer install --no-scripts --no-ansi --no-suggest --no-progress
+
+      - name: Run test suite
+        run: ./vendor/bin/phpunit
