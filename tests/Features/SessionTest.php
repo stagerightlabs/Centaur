@@ -1,6 +1,6 @@
 <?php
 
-namespace Centaur\Tests\Integrated;
+namespace Centaur\Tests\Features;
 
 use Sentinel;
 use Centaur\Tests\TestCase;

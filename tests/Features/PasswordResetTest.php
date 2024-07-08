@@ -1,6 +1,6 @@
 <?php
 
-namespace Centaur\Tests\Integrated;
+namespace Centaur\Tests\Features;
 
 use Mail;
 use Centaur\Tests\TestCase;
@@ -8,7 +8,7 @@ use Centaur\Mail\CentaurPasswordReset;
 use Cartalyst\Sentinel\Laravel\Facades\Reminder;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
-class PasswordReminderTest extends TestCase
+class PasswordResetTest extends TestCase
 {
     /** @test */
     public function a_user_can_reset_via_http()
