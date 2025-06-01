@@ -22,7 +22,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/support": "^11.0|^12.0",
-        "cartalyst/sentinel": "^8.0"
+        "cartalyst/sentinel": "^9.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5|^11.5.3",
