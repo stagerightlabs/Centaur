@@ -4,3 +4,4 @@ composer.lock
 vendor
 tests/data/database.sqlite
 .phpunit.result.cache
+.phpunit.cache/

@@ -1,40 +1,37 @@
 {
-    "name": "srlabs/centaur",
-    "description": "An opinionated implementation of Cartalyst's Sentinel for Laravel 5",
-    "keywords": [
-        "laravel",
-        "sentinel",
-        "auth"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Ryan Durham",
-            "email": "ryan@stagerightlabs.com",
-            "homepage": "http://stagerightlabs.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Centaur\\": "src/"
-        }
-    },
-    "require": {
-        "php": "^8.2",
-        "illuminate/support": "^11.0|^12.0",
-        "cartalyst/sentinel": "^9.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.5|^11.5.3",
-        "orchestra/testbench": "^9.0|^10.0",
-        "mockery/mockery": "^1.4.4"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Centaur\\Tests\\": "tests/"
-        }
-    },
-    "suggest": {
-        "vinkla/hashids": "A Hashids bridge for Laravel"
+  "name": "srlabs/centaur",
+  "description": "An opinionated implementation of Cartalyst's Sentinel for Laravel 5",
+  "keywords": [
+    "laravel",
+    "sentinel",
+    "auth"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ryan Durham",
+      "email": "ryan@stagerightlabs.com",
+      "homepage": "http://stagerightlabs.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Centaur\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.3",
+    "illuminate/support": "^12.0|^13.0",
+    "cartalyst/sentinel": "^9.0|^10.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5|^11.5.3",
+    "orchestra/testbench": "^10.0|^11.0",
+    "mockery/mockery": "^1.4.4"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Centaur\\Tests\\": "tests/"
+    }
+  }
 }
