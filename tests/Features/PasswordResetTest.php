@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Mail;
 use Centaur\Tests\TestCase;
 use Centaur\Mail\CentaurPasswordReset;
@@ -10,7 +12,7 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class PasswordResetTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function a_user_can_reset_via_http()
     {
         // Arrange
@@ -33,7 +35,7 @@ class PasswordResetTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_reset_code_will_not_work_via_http()
     {
         // Arrange
@@ -51,7 +53,7 @@ class PasswordResetTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_reset_via_ajax()
     {
         // Arrange
@@ -75,7 +77,7 @@ class PasswordResetTest extends TestCase
         $responseB->assertJsonFragment(["message" => "Password reset successful."]);
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_reset_code_will_not_work_via_ajax()
     {
         // Arrange

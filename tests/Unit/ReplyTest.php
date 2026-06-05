@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Integrated;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Sentinel;
 use Exception;
 use Centaur\AuthManager;
@@ -21,7 +23,7 @@ class ReplyTest extends TestCase
         $this->authManager = $this->app->make(AuthManager::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_knows_when_it_is_successful()
     {
         $successReply = new SuccessReply('message');
@@ -37,7 +39,7 @@ class ReplyTest extends TestCase
         $this->assertTrue($exceptionReply->isFailure());
     }
 
-    /** @test */
+    #[Test]
     public function it_knows_when_it_has_a_message()
     {
         $reply = new SuccessReply;
@@ -54,7 +56,7 @@ class ReplyTest extends TestCase
         $this->assertFalse($reply->hasMessage());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_manage_a_payload_of_arbitrary_data()
     {
         $user = Sentinel::findById(1);
@@ -69,7 +71,7 @@ class ReplyTest extends TestCase
         $this->assertFalse($reply->hasPayload());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_data_from_itself()
     {
         $user = Sentinel::findById(1);
@@ -82,7 +84,7 @@ class ReplyTest extends TestCase
         $this->assertFalse($reply->hasPayload());
     }
 
-    /** @test */
+    #[Test]
     public function it_delivers_exceptions()
     {
         $exception = new Exception;
@@ -102,7 +104,7 @@ class ReplyTest extends TestCase
         $this->assertTrue($reply->caughtAnException());
     }
 
-    /** @test  */
+    #[Test]
     public function it_can_be_cast_as_an_array()
     {
         $name = 'Andrei';

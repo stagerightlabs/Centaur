@@ -2,13 +2,15 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Mail;
 use Centaur\Tests\TestCase;
 use Centaur\Mail\CentaurWelcomeEmail;
 
 class RegistrationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function a_user_can_register_via_http()
     {
         // Arrange
@@ -29,7 +31,7 @@ class RegistrationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function an_existing_user_cannot_register_via_http()
     {
         // Arrange
@@ -47,7 +49,7 @@ class RegistrationTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_register_via_ajax()
     {
         // Arrange
@@ -74,7 +76,7 @@ class RegistrationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_register_again_via_ajax()
     {
         // Arrange

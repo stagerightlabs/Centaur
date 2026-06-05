@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Sentinel;
 use Centaur\Tests\TestCase;
 use Illuminate\Foundation\Auth\User;
@@ -12,7 +14,7 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class SessionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function a_user_can_login_via_http()
     {
         // Arrange
@@ -31,7 +33,7 @@ class SessionTest extends TestCase
         $this->assertInstanceOf(EloquentUser::class, Sentinel::check('admin@admin.com'));
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_login_via_http_and_be_remembered()
     {
         // Arrange
@@ -54,7 +56,7 @@ class SessionTest extends TestCase
         $response->assertRedirect('/dashboard');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_login_with_the_wrong_password()
     {
         // Arrange
@@ -75,7 +77,7 @@ class SessionTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function an_inactive_account_cannot_login()
     {
         // Arrange
@@ -91,7 +93,7 @@ class SessionTest extends TestCase
         $response->assertSessionHas('error', 'Your account has not been activated yet.');
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_user_cannot_login()
     {
         // Act
@@ -104,7 +106,7 @@ class SessionTest extends TestCase
         $response->assertSessionHas('error', 'Access denied due to invalid credentials.');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_login_via_ajax()
     {
         // Arrange
@@ -124,7 +126,7 @@ class SessionTest extends TestCase
         $this->assertNull($this->app['sentinel.cookie']->get());
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_user_cannot_login_via_ajax()
     {
         // Arrange
@@ -143,7 +145,7 @@ class SessionTest extends TestCase
         $response->assertJsonFragment(['message' => 'Access denied due to invalid credentials.']);
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_logout()
     {
         $this->signIn('admin@admin.com');

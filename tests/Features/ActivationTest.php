@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Mail;
 use Centaur\Tests\TestCase;
 use Centaur\Mail\CentaurWelcomeEmail;
@@ -9,7 +11,7 @@ use Cartalyst\Sentinel\Activations\EloquentActivation;
 
 class ActivationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function a_user_can_activate_via_http()
     {
         // $this->withoutExceptionHandling();
@@ -26,7 +28,7 @@ class ActivationTest extends TestCase
         $response->assertSessionHas('success');
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_activation_code_will_not_work_via_http()
     {
         // Arrange
@@ -40,7 +42,7 @@ class ActivationTest extends TestCase
         $response->assertSessionHas('error', 'Invalid or expired activation code.');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_activate_via_ajax()
     {
         // Arrange
@@ -58,7 +60,7 @@ class ActivationTest extends TestCase
         $response->assertJsonFragment(['message' => 'Registration complete.  You may now log in.']);
     }
 
-    /** @test */
+    #[Test]
     public function an_invalid_activation_code_will_not_work_via_ajax()
     {
         // Arrange
@@ -76,7 +78,7 @@ class ActivationTest extends TestCase
         $response->assertJsonFragment(['message' => 'Invalid or expired activation code.']);
     }
 
-    /** @test */
+    #[Test]
     public function it_resends_an_activation_email_via_http()
     {
         // Arrange
@@ -95,7 +97,7 @@ class ActivationTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function it_resends_an_activation_email_via_ajax()
     {
         // Arrange

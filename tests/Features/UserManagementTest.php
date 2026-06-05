@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Mail;
 use Sentinel;
 use Centaur\Tests\TestCase;
@@ -9,7 +11,7 @@ use Centaur\Mail\CentaurWelcomeEmail;
 
 class UserManagementTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function you_can_create_a_user_via_http()
     {
         // Arrange
@@ -42,7 +44,7 @@ class UserManagementTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function you_can_create_a_user_via_ajax()
     {
         // Arrange
@@ -79,7 +81,7 @@ class UserManagementTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function you_can_update_a_user_via_http()
     {
         // Arrange
@@ -114,7 +116,7 @@ class UserManagementTest extends TestCase
         $this->assertFalse($user->inRole($administrators));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_update_a_user_via_ajax()
     {
         // Arrange
@@ -147,7 +149,7 @@ class UserManagementTest extends TestCase
         $this->assertFalse($user->inRole($administrators));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_remove_a_user_via_http()
     {
         // Arrange
@@ -165,7 +167,7 @@ class UserManagementTest extends TestCase
         $this->assertDatabaseMissing('users', ['email' => 'user@user.com']);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_remove_a_user_via_ajax()
     {
         // Arrange
