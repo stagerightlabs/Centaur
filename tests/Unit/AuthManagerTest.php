@@ -2,6 +2,8 @@
 
 namespace Centaur\Tests\Integrated;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Sentinel;
 use Centaur\AuthManager;
 use Centaur\Tests\TestCase;
@@ -23,7 +25,7 @@ class AuthManagerTest extends TestCase
         $this->authManager = $this->app->make(AuthManager::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_authentication()
     {
         // Given
@@ -38,7 +40,7 @@ class AuthManagerTest extends TestCase
         $this->assertNull($this->app['sentinel.cookie']->get());
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_authentication_with_remember_cookie()
     {
         // Given
@@ -54,7 +56,7 @@ class AuthManagerTest extends TestCase
         $this->assertInstanceOf(IlluminateCookie::class, $cookie);
     }
 
-    /** @test */
+    #[Test]
     public function it_prevents_invalid_credentials_from_authenticating()
     {
         // Given
@@ -69,7 +71,7 @@ class AuthManagerTest extends TestCase
         $this->assertEquals("Access denied due to invalid credentials.", $result->message);
     }
 
-    /** @test */
+    #[Test]
     public function it_prevents_non_activated_users_from_authenticating()
     {
         // Given
@@ -88,7 +90,7 @@ class AuthManagerTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_a_logout_request()
     {
         // Given
@@ -102,7 +104,7 @@ class AuthManagerTest extends TestCase
         $this->assertInstanceOf(SuccessReply::class, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_registration()
     {
         // Given
@@ -120,7 +122,7 @@ class AuthManagerTest extends TestCase
         $this->assertFalse($activated);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_registration_and_automatic_activation()
     {
         // Given
@@ -136,7 +138,7 @@ class AuthManagerTest extends TestCase
         $this->assertInstanceOf(UserInterface::class, $result->user);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_register_a_duplicate_user()
     {
         // Given
@@ -150,7 +152,7 @@ class AuthManagerTest extends TestCase
         $this->assertEquals("Invalid credentials provided", $result->message);
     }
 
-    /** @test */
+    #[Test]
     public function it_activates_a_user()
     {
         // Given
@@ -164,7 +166,7 @@ class AuthManagerTest extends TestCase
         $this->assertInstanceOf(SuccessReply::class, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_an_incorrect_activation_code()
     {
         // Given
@@ -179,7 +181,7 @@ class AuthManagerTest extends TestCase
         $this->assertEquals("Invalid or expired activation code.", $result->message);
     }
 
-    /** @test */
+    #[Test]
     public function it_resets_passwords_with_a_valid_reset_code()
     {
         // Given
@@ -195,7 +197,7 @@ class AuthManagerTest extends TestCase
         $this->assertInstanceOf(SuccessReply::class, $result);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_resets_passwords_with_an_invalid_reset_code()
     {
         // Given

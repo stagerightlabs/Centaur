@@ -2,12 +2,14 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Sentinel;
 use Centaur\Tests\TestCase;
 
 class RoleManagementTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function you_can_create_a_role_via_http()
     {
         // Arrange
@@ -32,7 +34,7 @@ class RoleManagementTest extends TestCase
         $this->assertFalse($role->hasAccess('users.delete'));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_create_a_role_via_ajax()
     {
         // Arrange
@@ -61,7 +63,7 @@ class RoleManagementTest extends TestCase
         $this->assertFalse($role->hasAccess('users.delete'));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_update_a_role_via_http()
     {
         // Arrange
@@ -88,7 +90,7 @@ class RoleManagementTest extends TestCase
         $this->assertFalse($role->hasAccess('users.delete'));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_update_a_role_via_ajax()
     {
         // Arrange
@@ -119,7 +121,7 @@ class RoleManagementTest extends TestCase
         $this->assertFalse($role->hasAccess('users.delete'));
     }
 
-    /** @test */
+    #[Test]
     public function you_can_remove_a_role_via_http()
     {
         // Arrange
@@ -138,7 +140,7 @@ class RoleManagementTest extends TestCase
         $this->assertDatabaseMissing('roles', ['name' => 'Subscriber']);
     }
 
-    /** @test */
+    #[Test]
     public function you_can_remove_a_role_via_ajax()
     {
         // Arrange
@@ -157,7 +159,7 @@ class RoleManagementTest extends TestCase
         $this->assertDatabaseMissing('roles', ['name' => 'Subscriber']);
     }
 
-    /** @test */
+    #[Test]
     public function you_cannot_remove_roles_you_currently_belong_to()
     {
         // Arrange

@@ -2,11 +2,13 @@
 
 namespace Centaur\Tests\Features;
 
+use PHPUnit\Framework\Attributes\Test;
+
 use Centaur\Tests\TestCase;
 
 class MiddlewareTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_redirects_a_non_authenticated_user()
     {
         $response = $this->get(route('users.show', 1));
@@ -14,7 +16,7 @@ class MiddlewareTest extends TestCase
         $response->assertRedirect('/login');
     }
 
-    /** @test */
+    #[Test]
     public function it_blocks_a_non_authenticated_api_request()
     {
         // Arrange
@@ -30,7 +32,7 @@ class MiddlewareTest extends TestCase
         $response->assertJsonFragment(['error' => 'Unauthorized']);
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_a_user_without_permissions_to_the_dashboard()
     {
         $this->withoutExceptionHandling();
@@ -45,7 +47,7 @@ class MiddlewareTest extends TestCase
         $response->assertSessionHas('error', 'You do not have permission to do that.');
     }
 
-    /** @test */
+    #[Test]
     public function it_prevents_api_access_to_a_user_without_permissions()
     {
         // Arrange
@@ -63,7 +65,7 @@ class MiddlewareTest extends TestCase
         $response->assertJsonFragment(['error' => 'Unauthorized']);
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_a_user_who_does_not_have_an_appropriate_role()
     {
         // Arrange
@@ -76,7 +78,7 @@ class MiddlewareTest extends TestCase
         $response->assertSessionHas('error', 'You do not have permission to do that.');
     }
 
-    /** @test */
+    #[Test]
     public function it_prevents_api_access_to_a_user_with_an_improper_role()
     {
         // Arrange
@@ -93,7 +95,7 @@ class MiddlewareTest extends TestCase
         $response->assertJsonFragment(['error' => 'Unauthorized']);
     }
 
-    /** @test */
+    #[Test]
     public function it_redirects_authenticated_users_away_from_guest_only_pages()
     {
         // Arrange
@@ -106,7 +108,7 @@ class MiddlewareTest extends TestCase
         $response->assertRedirect('/dashboard');
     }
 
-    /** @test */
+    #[Test]
     public function it_prevents_api_access_for_authenticated_users_to_guest_endpoints()
     {
         // Arrange
