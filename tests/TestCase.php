@@ -30,7 +30,12 @@ class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        $this->prepareTestingDatabase();
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../vendor/cartalyst/sentinel/src/migrations'));
+        require_once __DIR__ . '/../seeds/SentinelDatabaseSeeder.php';
+        
+        $seeder = new \SentinelDatabaseSeeder();
+        $seeder->setContainer($this->app);
+        $seeder->__invoke();
     }
 
     /**
@@ -45,7 +50,7 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
             'driver'   => 'sqlite',
-            'database' => __DIR__ . '/data/database.sqlite',
+            'database' => ':memory:',
             'prefix'   => '',
         ]);
 
@@ -75,17 +80,6 @@ class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return ['Centaur\CentaurServiceProvider'];
-    }
-
-    /**
-     * Prepare the sqlite database
-     * http://www.chrisduell.com/blog/development/speeding-up-unit-tests-in-php/
-     *
-     * @return void
-     */
-    public function prepareTestingDatabase()
-    {
-        exec('cp ' . __DIR__ . '/data/staging.sqlite ' . __DIR__ . '/data/database.sqlite');
     }
 
     /**
